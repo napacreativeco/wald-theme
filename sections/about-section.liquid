@@ -1,0 +1,36 @@
+{% comment %}
+
+-- This SECTION is being called by the page.example.json template. The settings inside the Schema tag are found in the Customizer
+
+{% endcomment %}
+
+{% stylesheet %}
+    .about {
+        background: url("{{ section.settings.about_background_image | img_url: '720x720', scale: 2 }}");
+        background-size: cover;
+        background-position: center center;
+    }
+{% endstylesheet %}
+
+<section class="about" style="margin-top: 200px">
+
+    <div class="row">
+        <h2> {{ page.title }}</h2>
+        <div>{{ page.content }}</div>
+    </div>
+
+</section>
+
+{% schema %}
+  {
+    "name": "About Page - Background",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "about_background_image",
+        "label": "Background Image"
+      }
+    ]
+  }
+{% endschema %}
+
