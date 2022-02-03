@@ -1,0 +1,32 @@
+{% stylesheet %}
+
+{% endstylesheet %}
+
+<section class="about">
+
+    <div class="row">
+        <h2> {{ section.settings.custom_text_title }} </h2>
+        <div>{{ section.settings.custom_text_body }}</div>
+    </div>
+
+</section>
+
+{% schema %}
+  {
+    "name": "Your story",
+    "settings": [
+      {
+        "id": "story_title",
+        "type": "text",
+        "label": "Heading",
+        "default": "Title"
+      },
+      {
+        "id": "story_body",
+        "type": "richtext",
+        "label": "Add your story",
+        "default": "<p>Add your text here</p>"
+      }
+    ]
+  }
+{% endschema %}
