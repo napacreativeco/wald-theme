@@ -9,11 +9,17 @@
     ]
   },
   {
-    "name": "Example setting",
+    "name": "Hero",
     "settings": [
       {
-        "type": "header",
-        "content": "Example option"
+        "type": "image_picker",
+        "id": "hero_image_one",
+        "label": "Hero Image 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "hero_image_two",
+        "label": "Hero Image 2"
       }
     ]
   }

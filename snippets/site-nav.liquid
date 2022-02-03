@@ -8,45 +8,201 @@
   A word on sub-categories: Shopify manages sub-categories using product tags: http://docs.shopify.com/manual/configuration/store-customization/page-specific/collections/subcategories
 {% endcomment %}
 
-<nav role="navigation">
-  <ul>
-    {% for link in linklists.main-menu.links %}
-    {% assign has_sub_menu = false %}
-    {% assign has_sub_categories = false %}
-    {% assign parent_link_active = false %}
-    {% assign child_list_handle = link.title | handle %}
-    {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
-      {% assign has_sub_menu = true %}
-      {% for l in linklists[child_list_handle].links %}
-        {% if handle != blank and handle == l.object.handle %}
-          {% assign parent_link_active = true %}
-        {% elsif page_title == l.title %}
-          {% assign parent_link_active = true %}
-        {% endif %}
-      {% endfor %}
-    {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
-      {% assign has_sub_categories = true %}
-    {% endif %}
-    <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
-      <a href="{{ link.url }}">{{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}</a> 
-      {% if has_sub_menu or has_sub_categories %}
+<style>
+  /* Navigation */
+  .site-container {
+    position: relative;
+}
+  nav.main-nav {
+    padding: 10px 40px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background: transparent;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 8;
+  }
+  nav.main-nav .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+  }
+  nav.main-nav .center {
+    display: flex;
+    justify-content: center;
+  }
+  nav.main-nav .center img {
+    max-width: 200px;
+  }
+  nav.main-nav ul {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: space-between;
+  }
+  nav.main-nav li {
+      text-transform: uppercase;
+  }
+  nav.main-nav li a {
+    font-size: 1rem;
+  }
+  nav.main-nav li.cart-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  nav.main-nav li.cart-link img {
+    width: 20px;
+    margin: 0 14px 0 0;
+  }
+  /* Overlay */
+  .cart-overlay {
+    background: var(--light-green);
+    position: fixed;
+    top: 0;
+    right: -100vw;
+    bottom: 0;
+    width: 300px;
+    max-width: 50vw;
+    height: 100vh;
+    max-height: 100vh;
+    z-index: 99;
+  }
+</style>
+
+{% if template == 'article' %}
+  <nav class="main-nav" role="navigation" style="background-color: var(--green);">
+{% else %}
+  <nav class="main-nav" role="navigation">
+{% endif %}
+  <div class="row">
+
+    {% comment %} Navbar: Left {% endcomment %}
+    <div class="left">
       <ul>
-        {% if has_sub_menu %}
+        {% for link in linklists.navbar-left.links %}
+        {% assign has_sub_menu = false %}
+        {% assign has_sub_categories = false %}
+        {% assign parent_link_active = false %}
+        {% assign child_list_handle = link.title | handle %}
+        {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+          {% assign has_sub_menu = true %}
           {% for l in linklists[child_list_handle].links %}
-          <li class="{% if l.active %} active{% endif %}">
-            <a href="{{ l.url }}">{{ l.title }}</a>
-          </li>
+            {% if handle != blank and handle == l.object.handle %}
+              {% assign parent_link_active = true %}
+            {% elsif page_title == l.title %}
+              {% assign parent_link_active = true %}
+            {% endif %}
           {% endfor %}
-        {% elsif has_sub_categories %}
-          {% for tag in link.object.all_tags %}
-          <li class="{% if current_tags contains tag %} active{% endif %}">
-            <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
-          </li>
-          {% endfor %}
+        {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
+          {% assign has_sub_categories = true %}
         {% endif %}
+        <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
+          <a href="{{ link.url }}">{{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}</a> 
+          {% if has_sub_menu or has_sub_categories %}
+          <ul>
+            {% if has_sub_menu %}
+              {% for l in linklists[child_list_handle].links %}
+              <li class="{% if l.active %} active{% endif %}">
+                <a href="{{ l.url }}">{{ l.title }}</a>
+              </li>
+              {% endfor %}
+            {% elsif has_sub_categories %}
+              {% for tag in link.object.all_tags %}
+              <li class="{% if current_tags contains tag %} active{% endif %}">
+                <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+              </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
       </ul>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
+    </div>
+
+    {% comment %} Navbar: Center {% endcomment %}
+    <div class="center">
+      <a href="{{ routes.root_url }}" title="Wald">
+        <img src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}" />
+      </a>
+    </div>
+
+    {% comment %} Navbar: Right {% endcomment %}
+    <div class="right">
+      <ul>
+        {% for link in linklists.navbar-right.links %}
+        {% assign has_sub_menu = false %}
+        {% assign has_sub_categories = false %}
+        {% assign parent_link_active = false %}
+        {% assign child_list_handle = link.title | handle %}
+        {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+          {% assign has_sub_menu = true %}
+          {% for l in linklists[child_list_handle].links %}
+            {% if handle != blank and handle == l.object.handle %}
+              {% assign parent_link_active = true %}
+            {% elsif page_title == l.title %}
+              {% assign parent_link_active = true %}
+            {% endif %}
+          {% endfor %}
+        {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
+          {% assign has_sub_categories = true %}
+        {% endif %}
+        <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
+          <a href="{{ link.url }}">{{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}</a> 
+          {% if has_sub_menu or has_sub_categories %}
+          <ul>
+            {% if has_sub_menu %}
+              {% for l in linklists[child_list_handle].links %}
+              <li class="{% if l.active %} active{% endif %}">
+                <a href="{{ l.url }}">{{ l.title }}</a>
+              </li>
+              {% endfor %}
+            {% elsif has_sub_categories %}
+              {% for tag in link.object.all_tags %}
+              <li class="{% if current_tags contains tag %} active{% endif %}">
+                <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+              </li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+          {% endif %}
+        </li>
+        {% endfor %}
+
+        <li class="cart-link" onclick="flyOut()">
+            <img src="{{ 'cart-icon.svg' | asset_url }}" alt="Cart" />
+            <span>Cart</span>
+
+            <!--cart-->
+            <div class="header__cart">
+
+              <a class="js-ajax-cart-drawer-trigger" href="/cart">
+                  
+                  <span class="js-ajax-cart-counter">{{ cart.item_count }}</span>
+              </a>
+
+          </div>
+          <!--end cart-->
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+
 </nav>
+
+<div class="cart-overlay">
+  <div class="row">
+    {% include 'mini-cart' %}
+  </div>
+</div>
+
+<script>
+  function flyOut() {
+    jQuery('.cart-overlay').css('right', '0');
+  }
+</script>

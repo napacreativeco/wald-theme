@@ -4,69 +4,114 @@
   - Never paginate by more than 50.
 {% endcomment %}
 
-{% paginate collection.products by 10 %}
+<style>
+  .collections {
+    margin-top: 90px;
+    border-top: 1px solid var(--black);
+  }
+  /* Header */
+  .collections .header .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .collections .header .title h1 {
+    margin: 0 0 4px 0;
+    padding: 0;
+  }
+  .collections .header .title p {
+    margin: 0;
+  }
+  /* Products */
+  .collections ul.products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    padding: 20px 40px;
+  }
+  .collections ul.products li {
+    padding: 1px;
+  }
+  .collections ul.products li img {
+    width: 100%;
+  }
+  .collections ul.products li .info {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: flex-start;
+  }
+  .collections ul.products li p {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  .collections ul.products li .price {
+    text-align: right;
+  }
+  .collections ul.products li .price span {
+    font-family: var(--serif-font);
+  }
 
-  <h1>{{ collection.title }}</h1>
+</style>
 
-  {% comment %}
-    Collection sorting. Needs the JavaScript that is at the bottom of this file.
-  {% endcomment %}
-  {% if collection.products_count > 1 %}
-    <select class="sort-by right">
-      <option value="manual">Featured</option>
-      <option value="price-ascending">Price: Low to High</option>
-      <option value="price-descending">Price: Hight to Low</option>
-      <option value="title-ascending">A-Z</option>
-      <option value="title-descending">Z-A</option>
-      <option value="created-ascending">Oldest to Newest</option>
-      <option value="created-descending">Newest to Oldest</option>
-      <option value="best-selling">Best Selling</option>
-    </select>
-  {% endif %}
+<div class="collections">
 
-  {% comment %}
-    Listing all tags within the current collection.
-    Shopify uses product tags to manage subcategories inside collections.
-    See 'How do I create subcategories of products?' at 
-    http://bit.ly/1j1Dti4 for details.
-  {% endcomment %}
+  {% paginate collection.products by 10 %}
 
-  {% if collection.all_tags.size > 0 %}
-    <ul>
-      <li class="{% unless current_tags %} active{% endunless %}">
-        {{ 'All' | link_to_remove_tag: current_tags.first }}
-      </li>
-      {% for tag in collection.all_tags %}
-        {% if current_tags contains tag %}
-          <li class="active">
-            {{ tag | link_to_remove_tag: tag }}
+  <div class="header">
+
+      {% if collection.handle != 'all' %}
+        <div class="title">
+
+          <h1>{{ collection.title }}</h1>
+
+          {% if collection.description.size > 0 %}
+            <p>{{ collection.description }}</p>
+          {% endif %}
+
+        </div>
+      {% endif %}
+
+    </div>{% comment %} end: Header {% endcomment %}
+
+    <div class="row">
+      <ul class="products">
+        {% for product in collection.products %}
+          <li>
+            <a href="{{ product.url }}" title="{{ product.title }}">
+              <img src="{{ product.featured_image | img_url: "medium" }}" alt={{ product.title }}>
+            </a>
+
+            <div class="info">
+
+              <div class="title">
+                <a href="{{ product.url }}" title="{{ product.title }}">
+                  <p>{{ product.title }}</p>
+                </a>
+              </div>
+
+              <div class="price">
+                <a href="{{ product.url }}" title="{{ product.title }}">
+                  <span>{{ product.price |  money_without_trailing_zeros }}</span>
+                </a>
+              </div>
+
+            </div>
           </li>
         {% else %}
-          <li>
-            {{ tag | link_to_tag: tag }}
-          </li>
-        {% endif %}
-      {% endfor %}  
-    </ul>
-  {% endif %}
+          <li>There are no products in this view.</li>
+      {% endfor %}
+      </ul>
+    </div>
 
-  {% if collection.description.size > 0 %}
-    {{ collection.description }}
-  {% endif %}
+    {% if paginate.pages > 1 %}
+      {{ paginate | default_pagination }}
+    {% endif %}
 
-  {% for product in collection.products %}
-    <ul>
-      {% include 'product-item' %}
-    </ul>
-  {% else %}
-    <p>There are no products in this view.</p>
-  {% endfor %}
+  {% endpaginate %}
 
-  {% if paginate.pages > 1 %}
-    {{ paginate | default_pagination }}
-  {% endif %}
-
-{% endpaginate %}
+</div>{% comment %} end: Collections {% endcomment %}
 
 {% comment %}
   JavaScript for collection sorting.

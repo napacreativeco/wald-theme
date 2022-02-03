@@ -1,0 +1,215 @@
+<style>
+/* Footer */
+footer {
+    padding: 20px 40px;
+}
+footer .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: stretch;
+}
+footer .row .left {
+    position: relative;
+}
+footer .row .left img {
+    width: 200px;
+}
+footer .row .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+    text-align: center;
+}
+footer .row .center .email {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+footer span.large {
+    font-family: var(--serif-font);
+    font-size: 2.4rem;
+    margin: 0 0 14px 0;
+}
+footer .row .center .email input {
+    background: transparent; 
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--black);
+    border-left: 0;
+    margin: 0 0 14px 0;
+    text-align: center;
+    padding: 0 0 4px 0;
+}
+footer .row .center .email input::placeholder {
+    color: var(--black);
+    text-transform: uppercase;
+}
+footer .row .center .email button {
+    background: transparent;
+    border: 1px solid var(--black);
+    padding: 6px;
+    text-transform: uppercase;
+}
+footer .row .center a {
+    text-transform: uppercase;
+    margin: 30px 0 0 0;
+}
+footer .row .right {
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    align-items: stretch;
+    justify-content: center;
+    position: relative;
+}
+footer .row .right .quick-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+    position: relative;
+}
+footer .row .right .quick-links ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+footer .row .quick-links .right ul {
+    padding: 0 0 0 40px;
+}
+</style>
+
+{% if template == 'product' %}
+    <footer style="background: var(--orange);">
+{% elsif template == 'blog' %}
+    <footer style="background: var(--orange);">
+{% elsif template == 'article' %}
+    <footer style="background: var(--orange);">
+{% else %}
+    <footer style="background: var(--green);">
+{% endif %}
+
+    <div class="row">
+
+    {% comment %}} Left {% endcomment %}
+    <div class="left">
+    <div class="logo">
+        <a href="{{ routes.root_url }}" title="Wald">
+        {% capture image_size %}{{ section.settings.logo_max_width | escape }}{% endcapture %}
+        <img src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}" />
+        </a>
+    </div>
+    <div class="description">
+        <p>WALD creates one-of-a-kind wares, designed and produced in collaboration with artisans from around the world through a sustainable and ethical process.</p>
+    </div>     
+    </div>
+
+    {% comment %} Center {% endcomment %}
+    <div class="center">
+        <span class="large">Newsletter</span>
+        <div class="email">
+            {% comment %} Replace with MailChimp {% endcomment %}
+            <input type="email" name="email" placeholder="Email" />
+            <button type="submit">Sign up</button>
+        </div>
+
+        <a href="#" title="Instagram">Find us on Instagram</a>
+    </div>
+
+    {% comment %}} Right {% endcomment %}
+    <div class="right">
+        <span class="large">Quick Links</span>
+        <div class="quick-links">
+            <div class="left">
+            <ul>
+                {% for link in linklists.quick-links-left.links %}
+                {% assign has_sub_menu = false %}
+                {% assign has_sub_categories = false %}
+                {% assign parent_link_active = false %}
+                {% assign child_list_handle = link.title | handle %}
+                {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+                {% assign has_sub_menu = true %}
+                {% for l in linklists[child_list_handle].links %}
+                    {% if handle != blank and handle == l.object.handle %}
+                    {% assign parent_link_active = true %}
+                    {% elsif page_title == l.title %}
+                    {% assign parent_link_active = true %}
+                    {% endif %}
+                {% endfor %}
+                {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
+                {% assign has_sub_categories = true %}
+                {% endif %}
+                <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
+                <a href="{{ link.url }}">{{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}</a> 
+                {% if has_sub_menu or has_sub_categories %}
+                <ul>
+                    {% if has_sub_menu %}
+                    {% for l in linklists[child_list_handle].links %}
+                    <li class="{% if l.active %} active{% endif %}">
+                        <a href="{{ l.url }}">{{ l.title }}</a>
+                    </li>
+                    {% endfor %}
+                    {% elsif has_sub_categories %}
+                    {% for tag in link.object.all_tags %}
+                    <li class="{% if current_tags contains tag %} active{% endif %}">
+                        <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+                {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            </div>
+            <div class="right">
+            <ul>
+                {% for link in linklists.quick-links-right.links %}
+                {% assign has_sub_menu = false %}
+                {% assign has_sub_categories = false %}
+                {% assign parent_link_active = false %}
+                {% assign child_list_handle = link.title | handle %}
+                {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+                {% assign has_sub_menu = true %}
+                {% for l in linklists[child_list_handle].links %}
+                    {% if handle != blank and handle == l.object.handle %}
+                    {% assign parent_link_active = true %}
+                    {% elsif page_title == l.title %}
+                    {% assign parent_link_active = true %}
+                    {% endif %}
+                {% endfor %}
+                {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
+                {% assign has_sub_categories = true %}
+                {% endif %}
+                <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
+                <a href="{{ link.url }}">{{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}</a> 
+                {% if has_sub_menu or has_sub_categories %}
+                <ul>
+                    {% if has_sub_menu %}
+                    {% for l in linklists[child_list_handle].links %}
+                    <li class="{% if l.active %} active{% endif %}">
+                        <a href="{{ l.url }}">{{ l.title }}</a>
+                    </li>
+                    {% endfor %}
+                    {% elsif has_sub_categories %}
+                    {% for tag in link.object.all_tags %}
+                    <li class="{% if current_tags contains tag %} active{% endif %}">
+                        <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+                    </li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+                {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</footer>

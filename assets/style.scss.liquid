@@ -1,1 +1,90 @@
-/* CSS stykes go in here */
+/* Resets */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    font-size: 16px;
+}
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Saol Display';
+    src: url('SaolDisplay-Light.woff2') format('woff2'),
+        url('SaolDisplay-Light.woff') format('woff'),
+        url('SaolDisplay-Light.ttf') format('truetype'),
+        url('SaolDisplay-Light.svg#SaolDisplay-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'ABC Monument Grotesk';
+    src: url('ABCMonumentGrotesk-Regular.woff2') format('woff2'),
+        url('ABCMonumentGrotesk-Regular.woff') format('woff'),
+        url('ABCMonumentGrotesk-Regular.ttf') format('truetype'),
+        url('ABCMonumentGrotesk-Regular.svg#ABCMonumentGrotesk-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Saol Display';
+    src: url('SaolDisplay-LightItalic.woff2') format('woff2'),
+        url('SaolDisplay-LightItalic.woff') format('woff'),
+        url('SaolDisplay-LightItalic.ttf') format('truetype'),
+        url('SaolDisplay-LightItalic.svg#SaolDisplay-LightItalic') format('svg');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --green: #BDD4B4;
+    --light-green: #DAEAD3;
+    --orange: #F7943D;
+    --white: #FCFCFC;
+    --black: #000000;
+    --serif-font: 'Saol Display';
+    --sans-serif-font: 'ABC Monument Grotesk';
+    --border-blk: 1px solid var(--black);
+}
+
+p, a, span, li {
+    font-family: "ABC Monument Grotesk";
+    font-weight: 300;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Saol Display";
+    font-style: normal;
+    font-weight: 100;
+}
+
+em {
+    font-family: "Saol Display";
+    font-style: italic;
+}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color: initial;
+}
+
+/* Account Bar */
+.account-bar {
+    background: var(--white);
+    width: 100%;
+    text-align: center;
+}
+
+
