@@ -4,26 +4,49 @@
 
 {% endcomment %}
 
-{% stylesheet %}
+<style>
     .about {
         background: url("{{ section.settings.about_background_image | img_url: '720x720', scale: 2 }}");
         background-size: cover;
         background-position: center center;
     }
-{% endstylesheet %}
+    .about .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        height: 100vh;
+    }
+    .about .content {
+        padding: 10px;
+    }
+    .about h1 {
+        font-size: 3rem;
+    }
+    .about p {
+        max-width: 500px;
+    }
+</style>
 
-<section class="about" style="margin-top: 200px">
+
+
+<section class="about">
 
     <div class="row">
-        <h2> {{ page.title }}</h2>
-        <div>{{ page.content }}</div>
+        <div class="spacer">
+            &nbsp;
+        </div>
+        <div class="content">
+            <h1 class="fade_up">{{ page.title }}</h1>
+            <p class="fade_in_delay">{{ page.content }}</p>
+        </div>
+
     </div>
 
 </section>
 
 {% schema %}
   {
-    "name": "About Page - Background",
+    "name": "About us",
     "settings": [
       {
         "type": "image_picker",

@@ -1,3 +1,7 @@
+<div class="cart my-cart__items" data-ajax-cart-section>
+
+
+
 <h1>Shopping Cart</h1>
   
 {% if cart.item_count > 0 %}
@@ -35,12 +39,12 @@
       {% endif %}
 
       <tr>
-        <td>
+        <td class="image">
           <a href="{{ collection_url }}{{ item.url }}">
             <img src="{{ item | img_url: 'compact' }}"  alt="{{ item.title | escape }}" />
           </a>
         </td>
-        <td>
+        <td class="title">
           <h2>
             <a href="{{ collection_url }}{{ item.url }}">
               {{ item.title }}
@@ -64,12 +68,18 @@
           {% endif %}
           <h3>{{ item.vendor }}</h3>
         </td>
-        <td>{{ item.price | money }}</td>
-        <td>
-          <input type="number" name="updates[]" id="updates_{{ item.id }}" class="quantity" value="{{ item.quantity }}" />
+        <td class="price-single">
+          {{ item.final_price | money }}
         </td>
-        <td>{{ item.line_price | money }}</td>
         <td>
+          <a href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | minus: 1 }}">Minus</a>
+          {{ item.quantity }}
+          <a href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | plus: 1 }}">Plus</a>
+        </td>
+        <td class="price-total">
+          {{ item.final_line_price | money }}
+        </td>
+        <td class="remove">
           <a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a>
         </td>
       </tr>
@@ -108,3 +118,5 @@
   <h3>You can continue browsing <a href="/collections/all">here</a>.</h3>
 
 {% endif %}
+
+</div>

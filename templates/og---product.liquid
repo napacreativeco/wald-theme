@@ -5,7 +5,6 @@ To Finish:
 {% endcomment %}
 
 <style>
-    /* Product */
     .single-product .row {
       display: grid;
       grid-template-columns: 50% 50%;
@@ -74,7 +73,7 @@ To Finish:
     {% comment %}
       PRODUCT FORM
     {% endcomment %}
-    <form action="/cart/add" method="post" class="single-product" enctype="multipart/form-data" id="add-to-cart">
+    <form action="/cart/add" method="post" class="single-product" enctype="multipart/form-data">
       <div class="row">
         <div class="images">
       
@@ -82,6 +81,7 @@ To Finish:
           <a href="#" class="control control_prev">PREV</a>
   
           <ul>
+  
             {% if product.images.size == 0 %}
   
               <li class="placeholder">
@@ -112,15 +112,12 @@ To Finish:
                 
               {% endif %}
             {% endif %}
+  
           </ul>
         </div>
   
         {% comment %} INFO {% endcomment %}
         <div class="info">
-          {% comment %}
-          Trick to make stay on page, but it still refreshes
-          <input type="hidden" name="return_to" value="back" />
-          {% endcomment %}
   
           <div class="title">
             <h1>{{ product.title }}</h1>
@@ -222,10 +219,6 @@ To Finish:
                   </li>
                   {% endfor %}
                 </ul>
-
-                <div data-ajax-cart-messages="form" > 
-                  <!-- Errors and messages appear here --> 
-                </div>
                 
             </div> 
           

@@ -15,8 +15,8 @@
 }
   nav.main-nav {
     padding: 10px 40px;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
     background: transparent;
     position: fixed;
     top: 0;
@@ -56,6 +56,12 @@
   nav.main-nav li.cart-link img {
     width: 20px;
     margin: 0 14px 0 0;
+  }
+  nav.main-nav .cart-link {
+    cursor: pointer;
+  }
+  nav.main-nav .cart-count {
+    font-size: 0.7rem;
   }
   /* Overlay */
   .cart-overlay {
@@ -176,16 +182,9 @@
             <img src="{{ 'cart-icon.svg' | asset_url }}" alt="Cart" />
             <span>Cart</span>
 
-            <!--cart-->
-            <div class="header__cart">
-
-              <a class="js-ajax-cart-drawer-trigger" href="/cart">
-                  
-                  <span class="js-ajax-cart-counter">{{ cart.item_count }}</span>
-              </a>
-
-          </div>
-          <!--end cart-->
+            <div class="cart-count" data-ajax-cart-bind-state="cart.item_count" >
+              {{ cart.item_count }}
+            </div>
         </li>
 
       </ul>
@@ -197,12 +196,6 @@
 
 <div class="cart-overlay">
   <div class="row">
-    {% include 'mini-cart' %}
+    {% section 'mini-cart' %}
   </div>
 </div>
-
-<script>
-  function flyOut() {
-    jQuery('.cart-overlay').css('right', '0');
-  }
-</script>

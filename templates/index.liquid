@@ -6,70 +6,6 @@
 
 <style>
 
-  .slide .row {
-    height: 100vh;
-  }
-  /* Hero */
-  section.hero {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-  }
-  section.hero .row {
-      display: grid;
-      grid-template-columns: 50% 50%;
-      align-items: stretch;
-      max-width: 100%;
-  }
-  section.hero .left {
-    background: url("{{ settings.hero_image_one | img_url: '720x720', scale: 2 }}");
-    background-size: cover;
-    background-position: center center;
-  }
-  section.hero .right {
-      display: flex;
-      align-items: center;
-      background: var(--green);
-      padding: 0px 80px;
-  }
-  section.hero h1,
-  section.subhero h1 {
-    font-size: 4rem;
-  }
-  /* Slide One */
-  .hero .slide.one {
-    overflow: hidden;
-  }
-  .hero .slide.one img {
-    object-fit: cover;
-    object-position: center center;
-  }
-  /* Sub-Hero */
-  section.subhero {
-    margin-top: 100vh;
-    background: var(--white);
-  }
-  section.subhero .row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: stretch;
-  }
-  section.subhero .left {
-      display: flex;
-      align-items: center;
-      background: var(--orange);
-      padding: 20px 80px;
-  }
-  section.subhero .right {
-    background: url("{{ settings.hero_image_two | img_url: '720x720', scale: 2 }}");
-    background-size: cover;
-    background-position: center center;
-  }
-
   /* Home Products */
   section.home-products {
     background: var(--green);
@@ -131,34 +67,7 @@
   }
 </style>
 
-<section class="hero slide one">
-  <div class="row">
-      {% comment %} Left {% endcomment %}
-      {% assign image_size = "1000px" %}
-      <div class="left">
-        &nbsp;
-      </div>
-
-      {% comment %} Right {% endcomment %}
-      <div class="right">
-          <h1 class="fade_up">Clothing,<br /> based on <em>joy</em></h1>
-      </div>
-  </div>
-</section>
-
-<section class="subhero slide two">
-  <div class="row">
-    {% comment %} Left {% endcomment %}
-    <div class="left">
-      <h1 class="fade_up">Clothing,<br /> based on <em>joy</em></h1>
-    </div>
-
-    {% comment %} Right {% endcomment %}
-    <div class="right">
-        &nbsp;
-    </div>
-  </div> 
-</section>
+{% section 'hero-section' %}
 
 <section class="home-products">
   <div class="row">

@@ -44,10 +44,12 @@
   {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
   <script>jQuery('html').removeClass('no-js').addClass('js');</script>
 
+  <script src="https://unpkg.com/scrollreveal"></script>
+
 </head>
 
 <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
-  
+
   <div class="account-bar">
     {% if shop.customer_accounts_enabled %}
       {% if customer %}
@@ -100,16 +102,49 @@
   {% comment %}}
     Animate on Scroll
   {% endcomment %}
-  <script src="https://unpkg.com/scrollreveal"></script>
   <script>
     ScrollReveal().reveal('.fade_up', {
-      mirror: true,
       reset: true,
       easing: 'cubic-bezier(.1,1.19,.8,1.03)',
       distance: '24px',
       duration: 2000,
+      delay: 500,
+      opacity: 0,
+    });
+    ScrollReveal().reveal('.fade_in_delay', {
+      reset: true,
+      easing: 'cubic-bezier(.1,1.19,.8,1.03)',
+      distance: '0px',
+      duration: 3000,
+      delay: 1000,
     });
   </script>
+
+  <script type="application/json" data-ajax-cart-initial-state >
+    {{ cart | json }}
+  </script>
+  
+  <script type="module">
+    import '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}';
+  </script>
+
+  <script>
+    var flyOut = function() {
+        jQuery('.cart-overlay').css('right', '0');
+    }
+  </script>
+    
+
+    <script type="module">
+      import { subscribeToCartSectionsUpdate } from '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}'
+
+      subscribeToCartSectionsUpdate( sections => {
+        console.log('Sections are updated: ', sections);
+        {% if template != 'cart' %}
+          flyOut();
+        {% endif %}
+      });
+    </script>
 
 </body>
 

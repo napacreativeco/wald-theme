@@ -1,0 +1,192 @@
+<style>
+    .mini-cart {
+        overflow: hidden;
+        height: 100vh;
+        max-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow-y: scroll;
+    }
+    /* width */
+    .mini-cart::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    .mini-cart::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 5px grey; */
+    border-radius: 10px;
+    }
+
+    /* Handle */
+    .mini-cart::-webkit-scrollbar-thumb {
+    background: var(--green);
+    border-radius: 10px;
+    }
+    .mini-cart .header {
+        width: 100%;
+        text-align: center;
+    }
+    .mini-cart .header span.close img {
+        width: 20px;
+    }
+    .mini-cart .header a {
+        font-size: 5rem;
+        font-family: var(--serif-font);
+        text-transform: uppercase;
+    }
+    .mini-cart ul.items {
+        border-top: var(--border-blk);
+    }
+    .mini-cart li {
+        border-bottom: var(--border-blk);
+        padding: 10px;
+    }
+    .mini-cart li .item {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+    .mini-cart .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 10px;
+    }
+    .mini-cart .info p {
+        margin: 0;
+        padding: 0;
+    }
+    .mini-cart form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .mini-cart .actions {
+        background: var(--light-green);
+    }
+    .mini-cart .actions p {
+        margin: 0;
+        padding: 0;
+        text-transform: uppercase;
+    }
+    .mini-cart .actions ul {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .mini-cart .actions li {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .mini-cart .actions li.checkout {
+        padding: 20px;
+    }
+    .mini-cart .actions input[type="submit"] {
+        width: 100%;
+        height: 100%;
+        max-height: 60px;
+        background: var(--black);
+        color: var(--white);
+        padding: 20px;
+        border: 0;
+    }
+    @keyframes appear {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+</style>
+
+<div class="mini-cart my-cart__items" data-ajax-cart-section>
+    {% if cart.item_count > 0 %}
+
+        <div class="header">
+            <a href="/cart">Cart</a>
+        </div>
+
+        <form action="/cart" method="post">
+        
+            <ul class="items">
+
+                {% for item in cart.items %}    
+                
+                {% comment %}
+                Determining the handle of the collection that was last seen for the 'continue shopping' link.
+                {% endcomment %}
+                {% assign collection_url = item.product.collections.last.url %}
+                {% if collection_url == '/collections/frontpage' or collection_url == blank %}
+                    {% assign collection_url = '/collections/all' %}
+                {% endif %}
+                
+                {% if forloop.first %}
+                    {% assign continue_shopping_url = collection_url %}
+                {% endif %}
+
+                    <li>
+                        <div class="item">
+                
+                            <div class="image">
+                                <a href="{{ collection_url }}{{ item.url }}">
+                                    <img src="{{ item | img_url: 'compact' }}"  alt="{{ item.title | escape }}" />
+                                </a>
+                            </div>
+                    
+                            <div class="info">
+                                <div class="title">
+                                    <p>{{ item.product.title }}</p>
+                                    <p>{{ item.variant.title }}</p>
+                                </div>
+                                <div class="price">
+                                    <p>{{ item.price | money }} <small>x {{ item.quantity }}</small></p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+        
+            {% comment %}
+            For the checkout and update buttons to work, they need to use
+            a name attribute set to 'checkout' and 'update', respectively. That's case-sensitive.
+            {% endcomment %}
+            <div class="actions">
+                <ul>
+                    <li class="total">
+                        <p>Total</p> 
+                        <p>{{ cart.items_subtotal_price | money }}</p>
+                    </li>
+
+                    <li class="total">
+                        {% assign VATFreeTotal = cart.total_price | times: 0.0725 %}
+                        <p>Tax</p> 
+                        <p>{{ VATFreeTotal | money }}</p>
+                    </li>
+
+                    <li class="total">
+                        <p>Subtotal</p>
+                        <p>{{ cart.items_subtotal_price | plus: VATFreeTotal | money }}</p>
+                    </li>
+                </ul>
+
+                <input type="submit" name="checkout" value="Check out" />    
+                {% comment %}Paypal and Google checkout buttons{% endcomment %}
+                {% if additional_checkout_buttons %}
+                    {{ content_for_additional_checkout_buttons }}
+                {% endif %}
+            </div>
+
+        </form>
+
+    {% else %}
+
+        <h2>It appears that your cart is currently empty!</h2>
+        <h3>You can continue browsing <a href="/collections/all">here</a>.</h3>
+
+    {% endif %}
+    
+</div>

@@ -1,0 +1,190 @@
+<style>
+  .cart-page {
+    background: var(--green);
+    padding: 140px 10px 10px 10px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .cart-page form {
+    width: 100%;
+    max-width: 900px
+  }
+  
+  /* Widths */
+  .cart-page table {
+    width: 100%;
+  }
+  .cart-page tr {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--black);
+    padding: 40px 0;
+  }
+  .cart-page table thead tr {
+    padding: 0 0 20px 0;
+    font-family: var(--serif-font);
+    font-size: 1.3rem;
+  }
+  .cart-page table .product {
+    display: flex;
+    flex-direction: row;
+  }
+  .cart-page table .product .info {
+    padding: 0 10px 0 10px;
+  }
+  .cart-page table tbody .title a {
+    font-family: var(--serif-font);
+    font-size: 1.3rem;
+  }
+  .cart-page table .image img {
+    max-width: 100px;
+  }
+  .cart-page table .quantity {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    align-items: stretch;
+    max-width: 100px;
+    margin: 0 auto 0 auto;
+  }
+  .cart-page input::-webkit-outer-spin-button,
+  .cart-page input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .cart-page input[type=number] {
+    -moz-appearance: textfield;
+  }
+  .cart-page table .quantity input {
+    max-width: 40px;
+    text-align: center;
+    background: transparent;
+    border: 1px solid var(--black);
+  }
+  .cart-page table a.increment {
+    padding: 10px;
+    color: var(--black);
+  }
+  .cart-page table .total {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+</style>
+
+<div class="cart-page">
+
+  <form action="{{ routes.cart_url }}" method="post" class="my-cart">
+    <!-- data-ajax-cart-section makes the element's HTML update
+    when the cart gets changed -->
+    <div data-ajax-cart-section>
+      
+      <!-- data-ajax-cart-section-scroll keeps the scroll position unchanged
+      when the element's HTML is changed -->
+      <table class="my-cart__items" data-ajax-cart-section-scroll>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th style="text-align: center;">Quantity</th>
+            <th style="text-align: center;">Total</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for item in cart.items %}
+            {% assign item_index = forloop.index %}
+
+            <tr>
+
+              <td>
+                <div class="product">
+
+                  <div class="image">
+                    <img src="{{ item.image |  img_url: '500x500' }}" alt="{{ item.title }}" />
+                  </div>
+
+                  <div class="info">
+                    <div class="title">
+                      <a href="{{ item.url }}">{{ item.title }}</a>
+                    </div>
+                      
+                    {% for property in item.properties %}
+                      <div class="properties">
+                        {{ property.first }}:
+                        {% if property.first == 'Engraving' %}
+                          <!-- data-ajax-cart-property-input ajaxifies the line item property input -->
+                          <input type="text" value="{{ property.last }}" data-ajax-cart-property-input="{{ item_index }}[{{ property.first }}]"/>
+                        {% else %}
+                          {{ property.last }}
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+            
+                    <div class="price">
+                      {{ item.final_price | money }}
+                    </div>
+                  </div>
+
+                </div>
+              </td>
+
+              <td>
+                <!-- Container for errors -->
+                <div data-ajax-cart-messages="{{ item.key }}"></div>
+
+                <div class="quantity">
+                  <a class="increment minus" data-ajax-cart-request-button href="{{ routes.cart_change_url }}?line={{ item_index }}&quantity={{ item.quantity | minus: 1 }}" > 
+                    -
+                  </a>
+        
+                  <input data-ajax-cart-quantity-input="{{ item_index }}" name="updates[]" value="{{ item.quantity }}" type="number" />
+        
+                  <a class="increment add" data-ajax-cart-request-button href="{{ routes.cart_change_url }}?line={{ item_index }}&quantity={{ item.quantity | plus: 1 }}"> 
+                    +
+                  </a>
+                </div>
+              </td>
+
+              <td>
+                <div class="total">
+                  <strong>{{ item.final_line_price | money_without_trailing_zeros }}</strong>
+                </div>
+              </td>
+
+            </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+        
+
+    
+  
+      <!-- data-ajax-cart-property-input ajaxifies the cart note textarea -->
+      <textarea data-ajax-cart-property-input
+        name="note" 
+        placeholder="Cart note">
+        {{ cart.note }}
+      </textarea>
+      
+      <!-- data-ajax-cart-static-element keeps the container unchanged
+      when the cart and the surrounding HTML get updated -->
+      <div data-ajax-cart-static-element class="my-cart__app-container"></div>
+  
+      <button type="submit" name="checkout">
+        Checkout — {{ cart.total_price | money_with_currency }}
+      </button> 
+    </div>
+  </form>
+
+</div>
+
+
+  
+  {% schema %} { "name": "My Cart" } {% endschema %}
