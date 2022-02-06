@@ -1,10 +1,13 @@
 {
-    "sections": {
-      "main": {
-        "type": "about-section"
+  "sections": {
+    "main": {
+      "type": "about-section",
+      "settings": {
+        "about_background_image": "shopify:\/\/shop_images\/Screen_Shot_2021-09-11_at_9.47.22_AM.png"
       }
-    },
-    "order": [
-      "main"
-    ]
+    }
+  },
+  "order": [
+    "main"
+  ]
 }
