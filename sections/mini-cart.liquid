@@ -140,7 +140,7 @@
     }
 </style>
 
-<div class="mini-cart my-cart__items" data-ajax-cart-section>
+<div class="mini-cart my-cart__items">
 
     <div class="header">
         <div class="closer">
@@ -156,7 +156,7 @@
 
         <form action="/cart" method="post">
         
-            <ul class="items">
+            <ul class="items" data-ajax-cart-section>
 
                 {% for item in cart.items %}    
                 
