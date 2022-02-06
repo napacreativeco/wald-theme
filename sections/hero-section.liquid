@@ -62,6 +62,34 @@
     background-size: cover;
     background-position: center center;
   }
+
+  /* ======================= MEDIA QUERIES */
+  
+  /* Large devices */
+  @media (max-width: 1199.98px) { }
+  
+  /* Medium devices */
+  @media (max-width: 991.98px) { }
+
+  /* Landscape devices */
+  @media (max-width: 767.98px) {
+
+
+    section.hero .row {
+        grid-auto-flow: column;
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr 1fr;
+    }
+    section.subhero .row {
+      grid-auto-flow: column;
+      grid-template-columns: 100%;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+
+  /* iPhones */
+  @media (max-width: 575.98px) { }
+
 </style>
 
 <section class="hero slide one">

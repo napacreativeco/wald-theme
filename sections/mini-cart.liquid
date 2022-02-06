@@ -10,40 +10,78 @@
     }
     /* width */
     .mini-cart::-webkit-scrollbar {
-        width: 10px;
+        width: 5px;
+        height: 5px;
     }
 
     /* Track */
     .mini-cart::-webkit-scrollbar-track {
     /* box-shadow: inset 0 0 5px grey; */
-    border-radius: 10px;
+    border-radius: 0px;
     }
 
     /* Handle */
     .mini-cart::-webkit-scrollbar-thumb {
     background: var(--green);
-    border-radius: 10px;
+    border-radius: 0px;
     }
+    /* Header */
     .mini-cart .header {
         width: 100%;
         text-align: center;
-    }
-    .mini-cart .header span.close img {
-        width: 20px;
+        position: relative;
     }
     .mini-cart .header a {
         font-size: 5rem;
         font-family: var(--serif-font);
         text-transform: uppercase;
     }
+    .mini-cart .closer {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 6px;
+        z-index: 99999;
+        cursor: pointer;
+    }
+
+    .mini-cart .closer .container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        width: 30px;
+        height: 30px;
+    }
+    .mini-cart .closer span {
+        width: 20px;
+        height: 2px;
+        margin: 0px;
+        background: var(--black);
+        transition: all 0.5s;
+    }
+    .mini-cart .closer span:first-of-type {
+        transform: rotate(45deg);
+        position: absolute;
+    }
+    .mini-cart .closer span:last-of-type {
+        transform: rotate(-45deg);
+    }
+    /* Mini Cart */
+    .mini-cart form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
     .mini-cart ul.items {
         border-top: var(--border-blk);
     }
     .mini-cart li {
         border-bottom: var(--border-blk);
-        padding: 10px;
     }
-    .mini-cart li .item {
+    .mini-cart li.item {
         display: grid;
         grid-template-columns: 1fr 2fr;
     }
@@ -51,17 +89,19 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding: 10px;
+        padding: 20px;
+    }
+    .mini-cart img {
+        display: block;
     }
     .mini-cart .info p {
         margin: 0;
         padding: 0;
+        text-transform: uppercase;
+        font-size: 0.9rem;
     }
-    .mini-cart form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+
+    /* Actions (foot) */
     .mini-cart .actions {
         background: var(--light-green);
     }
@@ -80,18 +120,20 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        padding: 12px;
     }
-    .mini-cart .actions li.checkout {
-        padding: 20px;
+    .mini-cart .actions li.total {
+        border-top: 1px solid var(--black);
     }
     .mini-cart .actions input[type="submit"] {
         width: 100%;
         height: 100%;
-        max-height: 60px;
+        max-height: 40px;
         background: var(--black);
         color: var(--white);
-        padding: 20px;
+        padding: 0;
         border: 0;
+        text-transform: uppercase;
     }
     @keyframes appear {
         0% { opacity: 0; }
@@ -100,9 +142,16 @@
 </style>
 
 <div class="mini-cart my-cart__items" data-ajax-cart-section>
+
     {% if cart.item_count > 0 %}
 
         <div class="header">
+            <div class="closer">
+                <div class="container">
+                    <span>&nbsp;</span>
+                    <span>&nbsp;</span>
+                </div>
+            </div>
             <a href="/cart">Cart</a>
         </div>
 
@@ -124,26 +173,24 @@
                     {% assign continue_shopping_url = collection_url %}
                 {% endif %}
 
-                    <li>
-                        <div class="item">
-                
-                            <div class="image">
-                                <a href="{{ collection_url }}{{ item.url }}">
-                                    <img src="{{ item | img_url: 'compact' }}"  alt="{{ item.title | escape }}" />
-                                </a>
-                            </div>
-                    
-                            <div class="info">
-                                <div class="title">
-                                    <p>{{ item.product.title }}</p>
-                                    <p>{{ item.variant.title }}</p>
-                                </div>
-                                <div class="price">
-                                    <p>{{ item.price | money }} <small>x {{ item.quantity }}</small></p>
-                                </div>
-                            </div>
-
+                    <li class="item">
+                      
+                        <div class="image">
+                            <a href="{{ collection_url }}{{ item.url }}">
+                                <img src="{{ item | img_url: 'compact' }}"  alt="{{ item.title | escape }}" />
+                            </a>
                         </div>
+                
+                        <div class="info">
+                            <div class="title">
+                                <p>{{ item.product.title }}</p>
+                                <p>{{ item.variant.title }}</p>
+                            </div>
+                            <div class="price">
+                                <p>{{ item.price | money }} <small>x {{ item.quantity }}</small></p>
+                            </div>
+                        </div>
+  
                     </li>
 
                 {% endfor %}
@@ -161,23 +208,20 @@
                         <p>{{ cart.items_subtotal_price | money }}</p>
                     </li>
 
-                    <li class="total">
+                    <li class="tax">
                         {% assign VATFreeTotal = cart.total_price | times: 0.0725 %}
                         <p>Tax</p> 
                         <p>{{ VATFreeTotal | money }}</p>
                     </li>
 
-                    <li class="total">
+                    <li class="subtotal">
                         <p>Subtotal</p>
                         <p>{{ cart.items_subtotal_price | plus: VATFreeTotal | money }}</p>
                     </li>
                 </ul>
 
                 <input type="submit" name="checkout" value="Check out" />    
-                {% comment %}Paypal and Google checkout buttons{% endcomment %}
-                {% if additional_checkout_buttons %}
-                    {{ content_for_additional_checkout_buttons }}
-                {% endif %}
+
             </div>
 
         </form>

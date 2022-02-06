@@ -1,7 +1,7 @@
 <style>
   .cart-page {
     background: var(--green);
-    padding: 140px 10px 10px 10px;
+    padding: 140px 10px 80px 10px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,18 +18,20 @@
   .cart-page table {
     width: 100%;
   }
-  .cart-page tr {
+  .cart-page .my-cart__items tr {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     align-items: center;
     border-bottom: 1px solid var(--black);
     padding: 40px 0;
   }
+
   .cart-page table thead tr {
     padding: 0 0 20px 0;
     font-family: var(--serif-font);
     font-size: 1.3rem;
   }
+  /* Product Image, Title */
   .cart-page table .product {
     display: flex;
     flex-direction: row;
@@ -44,6 +46,7 @@
   .cart-page table .image img {
     max-width: 100px;
   }
+  /* Quantity */
   .cart-page table .quantity {
     display: grid;
     grid-template-columns: 1fr 40px 1fr;
@@ -69,10 +72,40 @@
     padding: 10px;
     color: var(--black);
   }
+  /* Total */
   .cart-page table .total {
     width: 100%;
     display: flex;
     justify-content: center;
+  }
+  /* Notes */
+  .cart-page textarea {
+    background: transparent;
+    border: 1px solid var(--black);
+    padding: 10px;
+    width: 100%;
+    min-height: 200px;
+    margin: 40px 0px;
+  }
+  /* Submit */
+  .cart-page button[name="checkout"] {
+    background: transparent;
+    padding: 10px;
+    text-transform: uppercase;
+    border: 1px solid var(--black);
+  }
+  .cart-page button[name="checkout"]:hover {
+    background: var(--black);
+    color: var(--green);
+    cursor: pointer;
+  }
+
+  /* Cart Totals */
+  .cart-page table.cart-totals  {
+    border-collapse: collapse;
+  }
+  .cart-page table.cart-totals tbody tr {
+    border-bottom: 1px solid var(--black);
   }
 
 </style>
@@ -80,12 +113,9 @@
 <div class="cart-page">
 
   <form action="{{ routes.cart_url }}" method="post" class="my-cart">
-    <!-- data-ajax-cart-section makes the element's HTML update
-    when the cart gets changed -->
+
     <div data-ajax-cart-section>
       
-      <!-- data-ajax-cart-section-scroll keeps the scroll position unchanged
-      when the element's HTML is changed -->
       <table class="my-cart__items" data-ajax-cart-section-scroll>
         <thead>
           <tr>
@@ -109,10 +139,11 @@
                   </div>
 
                   <div class="info">
+
                     <div class="title">
                       <a href="{{ item.url }}">{{ item.title }}</a>
-                    </div>
-                      
+                    </div>     
+
                     {% for property in item.properties %}
                       <div class="properties">
                         {{ property.first }}:
@@ -123,11 +154,12 @@
                           {{ property.last }}
                         {% endif %}
                       </div>
-                    {% endfor %}
-            
+                    {% endfor %}   
+
                     <div class="price">
-                      {{ item.final_price | money }}
+                      <span>{{ item.final_price | money_without_trailing_zeros }}</span>
                     </div>
+
                   </div>
 
                 </div>
@@ -152,7 +184,7 @@
 
               <td>
                 <div class="total">
-                  <strong>{{ item.final_line_price | money_without_trailing_zeros }}</strong>
+                  <span>{{ item.final_line_price | money_without_trailing_zeros }}</span>
                 </div>
               </td>
 
@@ -162,10 +194,30 @@
       </tbody>
     </table>
 
-        
+    {% comment %} Set Estimated Tax {% endcomment %}
+    {% assign VATFreeTotal = cart.total_price | times: 0.0725 %}
 
-    
-  
+    <table class="cart-totals">
+      <tbody>
+        <tr>
+          <td>
+            <p>Estimated Tax</p>
+          </th>
+          <td>
+            <p>{{ VATFreeTotal | money }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>Subtotal</p>
+          </td>
+          <td>
+            <p>{{ cart.items_subtotal_price | plus: VATFreeTotal | money }}</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+      
       <!-- data-ajax-cart-property-input ajaxifies the cart note textarea -->
       <textarea data-ajax-cart-property-input
         name="note" 
@@ -178,8 +230,13 @@
       <div data-ajax-cart-static-element class="my-cart__app-container"></div>
   
       <button type="submit" name="checkout">
-        Checkout — {{ cart.total_price | money_with_currency }}
+        Checkout
       </button> 
+
+      {% comment %}Paypal and Google checkout buttons{% endcomment %}
+      {% if additional_checkout_buttons %}
+          {{ content_for_additional_checkout_buttons }}
+      {% endif %}
     </div>
   </form>
 

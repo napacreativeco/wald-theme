@@ -129,23 +129,71 @@
   </script>
 
   <script>
-    var flyOut = function() {
-        jQuery('.cart-overlay').css('right', '0');
-    }
-  </script>
+    $('li.cart-link').on('click', function() {
+      jQuery('.cart-overlay').addClass('js-my-cart-open');
+    });
     
+    
+    
+  </script>
 
-    <script type="module">
-      import { subscribeToCartSectionsUpdate } from '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}'
+  <script>
 
-      subscribeToCartSectionsUpdate( sections => {
-        console.log('Sections are updated: ', sections);
-        {% if template != 'cart' %}
-          flyOut();
-        {% endif %}
-      });
-    </script>
+    jQuery('.hamburger').on('click', function() {
 
+        jQuery('nav.mobile').toggleClass('mobile-open');
+        jQuery('.hamburger').toggleClass('hamburger-active');
+
+        if( jQuery('nav.mobile').hasClass('mobile-open') ) {
+          jQuery('.mobile-overlay').fadeIn();
+        } else {
+          jQuery('.mobile-overlay').fadeOut();
+        }
+ 
+    });
+
+    jQuery('.mini-cart .closer').on('click', function() {
+      jQuery('.cart-overlay').removeClass('js-my-cart-open');
+    });
+
+    jQuery('form.single-product').on('submit', function() {
+      jQuery('.cart-link').trigger('click');
+    });
+    
+  </script>
+
+<script>
+  // Home - Line Items - Scroll
+  var wit = jQuery('ul.image-list').scrollLeft();
+  
+  jQuery('.next').on('click', function() {
+      var wit = $('ul.image-list').scrollLeft();
+      wit = wit + 300;
+      jQuery('ul.image-list').scrollLeft( wit );
+      console.log(wit);
+  });
+  jQuery('.prev').on('click', function() {
+      var wit = $('ul.image-list').scrollLeft();
+      wit = wit - 300;
+      jQuery('ul.image-list').scrollLeft( wit );
+      console.log(wit)
+  });
+  </script>
+
+
+  <script type="module">
+    import { subscribeToCartSectionsUpdate } from '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}'
+
+    subscribeToCartSectionsUpdate( sections => {
+      console.log('Sections are updated: ', sections);
+      {% comment %}
+      {% if template != 'cart' %}
+        flyOut();
+      {% endif %}
+      {% endcomment %}
+    });
+  </script>
+  
 </body>
 
 </html>

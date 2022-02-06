@@ -6,8 +6,7 @@
 
 <style>
   .collections {
-    margin-top: 90px;
-    border-top: 1px solid var(--black);
+    padding: 80px 0 40px 0;
   }
   /* Header */
   .collections .header .title {
@@ -52,6 +51,32 @@
   .collections ul.products li .price span {
     font-family: var(--serif-font);
   }
+
+
+  /* ======================= MEDIA QUERIES */
+  
+  /* Large devices */
+  @media (max-width: 1199.98px) { }
+  
+  /* Medium devices */
+  @media (max-width: 991.98px) { }
+
+  /* Landscape devices */
+  @media (max-width: 767.98px) {
+    .collections {
+      padding: 60px 0;
+    }
+    /* Products */
+    .collections ul.products {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      padding: 20px 40px;
+    }
+  }
+
+  /* iPhones */
+  @media (max-width: 575.98px) { }
 
 </style>
 

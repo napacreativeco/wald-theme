@@ -5,6 +5,7 @@ html {
     padding: 0;
     overflow-x: hidden;
     font-size: 16px;
+    letter-spacing: 1.2;
 }
 * {
     box-sizing: border-box;
@@ -26,13 +27,13 @@ body.js-ajax-cart-request-in-progress .my-cart__items {
 /* Make the submit button visually disabled */
 form.js-ajax-cart-form-in-progress [type="submit"] {
     opacity: .7;  
-  }
+}
   
-  /* Show a loading indicator */
-  form.js-ajax-cart-form-in-progress [type="submit"]:after { 
+/* Show a loading indicator */
+form.js-ajax-cart-form-in-progress [type="submit"]:after { 
     content: 'Adding to cart…'
     display: block; 
-  }
+}
 
 @font-face {
     font-family: 'Saol Display';
@@ -78,7 +79,7 @@ form.js-ajax-cart-form-in-progress [type="submit"] {
     --border-blk: 1px solid var(--black);
 }
 
-p, a, span, li {
+p, a, span, li, .js-ajax-cart-message {
     font-family: "ABC Monument Grotesk";
     font-weight: 300;
 }
