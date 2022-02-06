@@ -152,10 +152,12 @@
  
     });
 
+    // Close mini-cart drawer
     jQuery('.mini-cart .closer').on('click', function() {
       jQuery('.cart-overlay').removeClass('js-my-cart-open');
     });
 
+    // Open drawer on 'Add to cart'
     jQuery('form.single-product').on('submit', function() {
       jQuery('.cart-link').trigger('click');
     });

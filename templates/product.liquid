@@ -196,17 +196,23 @@ To Finish:
 
   /* Landscape devices */
   @media (max-width: 767.98px) {
+    .site-container {
+    }
     .single-product .row {
+      padding-top: 60px;
       grid-auto-flow: column;
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
+      grid-template-rows: 50vh 1fr;
     }
     .single-product .images {
       height: 100%;
+      max-height: 50vh;
     }
-    .single-product .image-list li img {
-      height: 100%;
+    .single-product .images li img {
+      object-fit: fit;
       width: 100vw;
+      min-height: auto;
+      height: 100%;
     }
     .single-product .row .info {
       padding: 20px;
