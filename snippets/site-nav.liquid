@@ -374,17 +374,19 @@
 *
 {% endcomment %}
 {% if template == 'collection' %}
-  <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
 {% elsif template == 'product' %}
-  <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
 {% elsif template == 'blog' %}
-  <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+{% elsif template == 'article' %}
+    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
 {% else %}
-  {% if page.handle == 'about-us' %}
-    <nav class="mobile" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
-  {% else %}
-    <nav class="mobile">
-  {% endif %}
+    {% if page.handle == 'about-us' %}
+        <nav class="mobile" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+    {% else %}
+        <nav class="mobile">
+    {% endif %}
 {% endif %}
 
 
