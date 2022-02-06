@@ -129,15 +129,6 @@
   </script>
 
   <script>
-    $('li.cart-link').on('click', function() {
-      jQuery('.cart-overlay').addClass('js-my-cart-open');
-    });
-    
-    
-    
-  </script>
-
-  <script>
 
     jQuery('.hamburger').on('click', function() {
 
@@ -152,8 +143,13 @@
  
     });
 
+    // Open mini-cart drawer
+    $('li.cart-link').on('click', function() {
+      jQuery('.cart-overlay').addClass('js-my-cart-open');
+    });
+
     // Close mini-cart drawer
-    jQuery('.mini-cart .closer').on('click', function() {
+    jQuery('.closer > .container').on('click', function() {
       jQuery('.cart-overlay').removeClass('js-my-cart-open');
     });
 

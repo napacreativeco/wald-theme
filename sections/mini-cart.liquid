@@ -143,17 +143,17 @@
 
 <div class="mini-cart my-cart__items" data-ajax-cart-section>
 
-    {% if cart.item_count > 0 %}
-
-        <div class="header">
-            <div class="closer">
-                <div class="container">
-                    <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                </div>
+    <div class="header">
+        <div class="closer">
+            <div class="container">
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
             </div>
-            <a href="/cart">Cart</a>
         </div>
+        <a href="/cart">Cart</a>
+    </div>
+
+    {% if cart.item_count > 0 %}
 
         <form action="/cart" method="post">
         
