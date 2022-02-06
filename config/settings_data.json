@@ -11,7 +11,7 @@
       "hero-section": {
         "type": "hero-section",
         "settings": {
-          "hero_text_one": "Clothing based on <em>joy<\/em>",
+          "hero_text_one": "Clothing based on <br><em>joy<\/em>",
           "hero_image_one": "shopify:\/\/shop_images\/Screen_Shot_2021-09-11_at_10.02.04_AM.png",
           "hero_text_two": "Lorem ipsum dolor sit <em>amet<\/em>",
           "hero_image_two": "shopify:\/\/shop_images\/Screen_Shot_2021-09-11_at_10.32.01_PM.png"
