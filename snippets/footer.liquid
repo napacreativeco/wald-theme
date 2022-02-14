@@ -9,81 +9,135 @@
         color: var(--black);
     }
     footer .row {
+        display: -ms-grid;
         display: grid;
+        -ms-grid-columns: 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr 1fr;
-        align-items: stretch;
+        -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+                align-items: stretch;
     }
+    /* LEFT */
     footer .row .left {
         position: relative;
     }
     footer .row .left img {
         width: 200px;
     }
+    /* CENTER */
     footer .row .center {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        align-items: space-between;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -webkit-box-align: space-between;
+            -ms-flex-align: space-between;
+                align-items: space-between;
         text-align: center;
     }
-    footer .row .center .email {
+    footer .row .center .email form {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
     }
     footer span.large {
         font-family: var(--serif-font);
         font-size: 2.4rem;
         margin: 0 0 14px 0;
     }
-    footer .row .center .email input {
+    footer .row .center .email input[type="text"] {
         background: transparent; 
         border-top: 0;
         border-right: 0;
         border-bottom: 1px solid var(--black);
         border-left: 0;
+        border-radius: 0px;
         margin: 0 0 14px 0;
         text-align: center;
         padding: 0 0 4px 0;
+        width: 80%;
+        max-width: 300px;
     }
-    footer .row .center .email input::placeholder {
+    footer .row .center .email input[type="text"]::-webkit-input-placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email button {
+    footer .row .center .email input[type="text"]::-moz-placeholder {
+        color: var(--black);
+        text-transform: uppercase;
+    }
+    footer .row .center .email input[type="text"]:-ms-input-placeholder {
+        color: var(--black);
+        text-transform: uppercase;
+    }
+    footer .row .center .email input[type="text"]::-ms-input-placeholder {
+        color: var(--black);
+        text-transform: uppercase;
+    }
+    footer .row .center .email input[type="text"]::placeholder {
+        color: var(--black);
+        text-transform: uppercase;
+    }
+    footer .row .center .email input[type="submit"] {
         background: transparent;
         border: 1px solid var(--black);
         padding: 6px;
         text-transform: uppercase;
+        color: var(--black);
+        width: auto;
+        cursor: pointer;
+        transition: all 0.5s;
+    }
+    footer .row .center .email input[type="submit"]:hover {
+        opacity: 0.6;
     }
     footer .row .center a {
         text-transform: uppercase;
         margin: 30px 0 0 0;
     }
+    /* RIGHT */
     footer .row .right {
-        display: grid;
-        grid-template-rows: 1fr 2fr;
-        align-items: stretch;
-        justify-content: center;
-        position: relative;
-    }
-    footer .row .right .quick-links {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: stretch;
-        position: relative;
-    }
-    footer .row .right .quick-links ul {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
     }
-    footer .row .quick-links .right ul {
+    footer .row .quick-links {
+        display: -ms-grid;
+        display: grid;
+        -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
+            -webkit-box-align: stretch;
+            -ms-flex-align: stretch;
+        width: 100%;
+        height: 100%;
+    }
+    footer .row .quick-links ul {
+        display: flex;
+            display: -webkit-box;
+            display: -ms-flexbox;
+        flex-direction: column;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+        justify-content: space-between;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+        height: 100%;
+    }
+    footer .row .quick-links .r ul {
         padding: 0 0 0 40px;
     }
     a.instagram-desktop {
@@ -110,34 +164,48 @@
             border-top: 1px solid #000;
         }
         footer .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             flex-wrap: wrap-reverse;
+                -ms-flex-wrap: wrap-reverse;
             align-items: stretch;
+                -webkit-box-align: stretch;
+                -ms-flex-align: stretch;
         }
         footer .row > div {
             width: 100%;
         }
+        /* MQ: Center */
         footer .row .center {
-            margin: 0 0 20px 0;
+            margin: 0 0 60px 0;
         }
         footer .row .center .email {
             align-items: flex-start;
+                -webkit-box-align: start;
+                -ms-flex-align: start;
             margin: 30px 0 0 0;
             width: 100%;
         }
-        footer .row .center .email input {
+        footer .row .center .email form {
+            align-items: flex-start;
+                -webkit-box-align: start;
+                -ms-flex-align: start;
+        }
+        footer .row .center .email input[type="text"] {
             width: 100%;
             text-align: left;
         }
+        /* MQ: Right */
         footer .row .right {
             width: 100%;
-            justify-content: flex-start;
-            margin: 0 0 20px 0;
+            display: flex;
+            flex-direction: column;
+            padding: 1px;
+            margin: 0 0 10px 0;
         }
-        footer .row .right .quick-links {
-            justify-content: flex-start;
-            grid-template-columns: 1fr 1fr;
-            width: 100%;
+        footer .row .right li {
+            margin: 10px 0;
         }
         a.instagram-mobile {
             display: block;
@@ -152,21 +220,31 @@
   @media (max-width: 575.98px) { }
 </style>
 
-{% if template == 'product' %}
+{% if template == 'collection' %}
 
-    <footer style="background: var(--orange);">
+    <footer style="background: var(--green); border-top: 1px solid var(--black);">
+    {% assign logo_src = 'logo.svg' %}
+
+{% elsif page.handle == 'about-us' %}
+
+    <footer style="background: var(--green); border-top: 1px solid var(--black);">
+    {% assign logo_src = 'logo.svg' %}
+
+{% elsif template == 'product' %}
+
+    <footer style="background: var(--orange); border-top: 1px solid #000;">
     <style> footer { --black: #fff!important; }</style>
     {% assign logo_src = 'logo-white.svg' %}
 
 {% elsif template == 'blog' %}
 
-    <footer style="background: var(--orange);">
+    <footer style="background: var(--orange); border-top: 1px solid #000;">
     <style> footer { --black: #fff!important; }</style>
     {% assign logo_src = 'logo-white.svg' %}
 
 {% elsif template == 'article' %}
 
-    <footer style="background: var(--orange);">
+    <footer style="background: var(--orange); border-top: 1px solid #000;">
     <style> footer { --black: #fff!important; }</style>
     {% assign logo_src = 'logo-white.svg' %}
 
@@ -185,7 +263,11 @@
 
     <div class="row">
 
-    {% comment %}} Left {% endcomment %}
+    {% comment %}}
+    *
+    * Left
+    *
+    {% endcomment %}
     <div class="left">
         <div class="logo">
             <a href="{{ routes.root_url }}" title="Wald">
@@ -197,24 +279,37 @@
         </div>     
     </div>
 
-    {% comment %} Center {% endcomment %}
+    {% comment %}
+    *
+    * Center
+    *
+    {% endcomment %}
     <div class="center">
         <span class="title-desktop large">Newsletter</span>
         <a href="#" class="instagram-mobile" title="Instagram">Find us on Instagram</a>
         <div class="email">
-            {% comment %} Replace with MailChimp {% endcomment %}
-            <input type="email" name="email" placeholder="Email" />
-            <button type="submit">Sign up</button>
+            {% form 'customer' %}
+                <input id="contact_tags" name="contact[tags]" type="hidden" value="prospect,newsletter" />
+
+                <input id="contact_email" name="contact[email]" type="text" placeholder="Email" />
+                <input class="submit" type="submit" value="Sign Up" />
+            {% endform %}
         </div>
 
         <a href="#" class="instagram-desktop" title="Instagram">Find us on Instagram</a>
     </div>
 
-    {% comment %}} Right {% endcomment %}
+    {% comment %}}
+    *
+    * Right
+    *
+    {% endcomment %}
     <div class="right">
+
         <span class="large">Quick Links</span>
+        
         <div class="quick-links">
-            <div class="left">
+            <div class="l">
             <ul>
                 {% for link in linklists.quick-links-left.links %}
                 {% assign has_sub_menu = false %}
@@ -256,7 +351,7 @@
                 {% endfor %}
             </ul>
             </div>
-            <div class="right">
+            <div class="r">
             <ul>
                 {% for link in linklists.quick-links-right.links %}
                 {% assign has_sub_menu = false %}

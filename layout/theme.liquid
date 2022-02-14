@@ -130,7 +130,7 @@
 
   <script>
 
-    //In your js file:
+    // ViewHeight fix for mobile
     jQuery(document).ready(function() {
       document.querySelector(':root').style.setProperty('--vh', window.innerHeight/100 + 'px');
     });
@@ -139,6 +139,7 @@
         document.querySelector(':root').style.setProperty('--vh', window.innerHeight/100 + 'px');
     });
 
+    // Open Mini Menu
     jQuery('.hamburger').on('click', function() {
 
         jQuery('nav.mobile').toggleClass('mobile-open');
@@ -157,34 +158,38 @@
       jQuery('.cart-overlay').addClass('js-my-cart-open');
     });
 
-    // Close mini-cart drawer
-    jQuery('.closer > .container').on('click', function() {
-      jQuery('.cart-overlay').removeClass('js-my-cart-open');
-    });
-
     // Open drawer on 'Add to cart'
     jQuery('form.single-product').on('submit', function() {
       jQuery('.cart-overlay').addClass('js-my-cart-open');
+    });
+
+    // Close mini-cart drawer
+    jQuery('.closer > .container').on('click', function() {
+      jQuery('.cart-overlay').removeClass('js-my-cart-open');
     });
     
   </script>
 
 <script>
-  // Home - Line Items - Scroll
-  var wit = jQuery('ul.image-list').scrollLeft();
-  
-  jQuery('.next').on('click', function() {
-      var wit = $('ul.image-list').scrollLeft();
-      wit = wit + 300;
-      jQuery('ul.image-list').scrollLeft( wit );
-      console.log(wit);
-  });
-  jQuery('.prev').on('click', function() {
-      var wit = $('ul.image-list').scrollLeft();
-      wit = wit - 300;
-      jQuery('ul.image-list').scrollLeft( wit );
-      console.log(wit)
-  });
+  // Home - Line Items - Scroll *WORKS*
+    var wit = jQuery('ul.image-list').scrollLeft();
+    var theWidth = jQuery('.image-list img').width();
+
+
+    jQuery('.next').on('click', function() {
+        var wit = $('ul.image-list').scrollLeft();
+        wit = wit + theWidth;
+        jQuery('ul.image-list').animate({ scrollLeft: wit }, 500);
+        console.log(theWidth);
+
+    });
+    jQuery('.prev').on('click', function() {
+        var wit = $('ul.image-list').scrollLeft();
+        wit = wit - theWidth;
+        jQuery('ul.image-list').animate({ scrollLeft: wit }, 500);
+        console.log(theWidth)
+    });  
+
   </script>
 
 
@@ -193,11 +198,6 @@
 
     subscribeToCartSectionsUpdate( sections => {
       console.log('Sections are updated: ', sections);
-      {% comment %}
-      {% if template != 'cart' %}
-        flyOut();
-      {% endif %}
-      {% endcomment %}
     });
   </script>
   

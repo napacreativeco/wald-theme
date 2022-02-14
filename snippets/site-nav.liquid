@@ -14,12 +14,14 @@
     position: relative;
   }
   .active a {
-    text-decoration: underline !important;
+    border-bottom: 1px solid var(--black);
   }
   nav.desktop {
     padding: 10px 40px;
-    -webkit-backdrop-filter: blur(8px);
+    mask: linear-gradient(#000, #000, transparent);
+      -webkit-mask: linear-gradient(#000, #000, transparent);
     backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     background: transparent;
     position: fixed;
     top: 0;
@@ -28,22 +30,43 @@
     z-index: 99;
   }
   nav.desktop .row {
+      display: -ms-grid;
       display: grid;
+      -ms-grid-columns: 1fr 1fr 1fr;
       grid-template-columns: 1fr 1fr 1fr;
-      align-items: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      position: relative;
   }
   nav.desktop .center {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  nav.desktop .center a:hover {
+    border-bottom: 0px;
   }
   nav.desktop .center img {
     max-width: 140px;
   }
   nav.desktop ul {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: space-between;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-align: start;
+          -ms-flex-align: start;
+              align-items: flex-start;
+      -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
   }
   nav.desktop li {
       text-transform: uppercase;
@@ -51,13 +74,17 @@
   nav.desktop li a {
     font-size: 0.8rem;
   }
-  nav.desktop li a.active {
-    text-decoration: underline !important;
-  }
   nav.desktop li.cart-link {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   nav.desktop li.cart-link img {
     width: 20px;
@@ -86,6 +113,8 @@
     max-height: 100vh;
     z-index: 9999;
     border-left: 1px solid var(--black);
+    -webkit-transition: all 0.7s;
+    -o-transition: all 0.7s;
     transition: all 0.7s;
   }
   .cart-overlay .row {
@@ -93,6 +122,9 @@
   }
   .js-my-cart-open { right: 0 !important; }
 
+  /* =====================================
+                MEDIA QUERIES
+     ===================================== */
   /* Large devices */
   @media (max-width: 1199.98px) { }
   
@@ -104,28 +136,47 @@
     nav.desktop {
       display: none;
     }
+    nav.mobile .logo a:focus {
+      border-bottom: 0px;
+    }
     nav.mobile {
       display: block;
-      -webkit-backdrop-filter: blur(8px);
+      mask: linear-gradient(#000, #000, transparent);
+        -webkit-mask: -webkit-gradient(linear, left top, left bottom, from(#000), color-stop(#000), to(transparent));
+        -webkit-mask: linear-gradient(#000, #000, transparent);
       backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
       background: transparent;
       position: fixed;
       top: 0;
       right: 0;
       left: 0;
       z-index: 999;
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
       transition: all 0.5s;
     }
     nav.mobile.mobile-open {
       background: var(--green) !important;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
+      mask: none;
+      -webkit-mask: none;
     }
     nav.mobile .row {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: row;
+              flex-direction: row;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
       padding: 10px 40px;
       position: relative;
       width: 100%;
@@ -140,16 +191,27 @@
       margin: auto;
     }
     nav.mobile .hamburger .buns {
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -webkit-box-pack: justify;
+          -ms-flex-pack: justify;
+              justify-content: space-between;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
     }
     nav.mobile .hamburger span {
       width: 30px;
       height: 3px;
       margin: 3px 0px;
       background: var(--black);
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
       transition: all 0.5s;
     }
     nav.mobile .hamburger span:last-of-type {
@@ -158,11 +220,15 @@
     /* Hamburger: Active */
     nav.mobile .hamburger-active span.patty { width: 0; height: 0; margin: 0; }
     nav.mobile .hamburger-active span:first-of-type {
-      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+          -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
       position: absolute;
     }
     nav.mobile .hamburger-active span:last-of-type {
-      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+          -ms-transform: rotate(-45deg);
+              transform: rotate(-45deg);
     }
     nav.mobile .close {
       display: none;
@@ -179,6 +245,8 @@
       padding: 0;
     }
     .mobile-overlay-active {
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
       transition: all 0.5s;
     }
 
@@ -187,6 +255,8 @@
       height: 3px;
       margin: 3px 0px;
       background: var(--black);
+      -webkit-transition: all 0.5s;
+      -o-transition: all 0.5s;
       transition: all 0.5s;
     }
     .mobile-overlay ul {
@@ -219,11 +289,11 @@
 
 
 {% if template == 'article' %}
-  <nav class="desktop" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+  <nav class="desktop" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% elsif template == 'collection' %}
-  <nav class="desktop" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
+  <nav class="desktop" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% elsif template == 'blog' %}
-  <nav class="desktop" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+  <nav class="desktop" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% else %}
   <nav class="desktop" role="navigation">
 {% endif %}
@@ -304,7 +374,7 @@
     {% endcomment %}
     <div class="center">
       <a href="{{ routes.root_url }}" title="Wald">
-        <img src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}" />
+        <img src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}" style="mask: none; -webkit-mask: none; opacity: 1;" />
       </a>
     </div>
 
@@ -375,16 +445,16 @@
 *
 {% endcomment %}
 {% if template == 'collection' %}
-    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% elsif template == 'product' %}
     <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
 {% elsif template == 'blog' %}
-    <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--green); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% elsif template == 'article' %}
-    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black);">
+    <nav class="mobile" role="navigation" style="background-color: var(--white); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
 {% else %}
     {% if page.handle == 'about-us' %}
-        <nav class="mobile" style="background-color: var(--green); border-bottom: 1px solid var(--black);">
+        <nav class="mobile" style="background-color: var(--green); border-bottom: 1px solid var(--black); -webkit-mask: none; mask: none; -webkit-backdrop-filter: none; backdrop-filter: none;">
     {% else %}
         <nav class="mobile">
     {% endif %}
@@ -413,7 +483,18 @@
     </div>
 
   </div>
-  <div class="mobile-overlay">
+  {% comment %}
+  *
+  * Mobile Overlay
+  *
+  {% endcomment %}
+  {% if template == 'collection' %}
+    <div class="mobile-overlay" style="background: var(--white);">
+      <style>nav.mobile.mobile-open { background: var(--white) !important; }</style>
+  {% else %}
+    <div class="mobile-overlay">
+  {% endif %}
+
     <div class="row">
       <ul>
         {% for link in linklists.mobile-overlay.links %}

@@ -1,4 +1,7 @@
 <style>
+  .single-post .account-bar {
+    display: none;
+  }
   .single-post {
     padding: 100px 0px;
   }
@@ -20,7 +23,7 @@
   .single-post .article .timestamp {
     margin: 0 0 14px 0;
   }
-  .single-post .single-image img {
+  .single-post img {
     width: 100%;
     object-fit: cover;
   }
@@ -57,12 +60,18 @@
     .single-post {
       padding: 50px 0px;
     }
+    
     .single-post .row {
-      grid-template-columns: 1fr;
+      display: flex;
+      flex-direction: column;
       padding: 0px;
     }
     .single-post .sidebar {
-      display: none;
+      padding: 20px;
+      border-bottom: 1px solid var(--black);
+    }
+    .single-post .content {
+      padding: 10px 30px;
     }
     .single-post .header {
       border-bottom: 1px solid var(--black);

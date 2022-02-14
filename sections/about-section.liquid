@@ -5,15 +5,20 @@
 {% endcomment %}
 
 <style>
+
     .about {
         background: url("{{ section.settings.about_background_image | img_url: '720x720', scale: 2 }}");
         background-size: cover;
         background-position: center center;
     }
     .about .row {
+        display: -ms-grid;
         display: grid;
+        -ms-grid-columns: 1fr 1fr;
         grid-template-columns: 1fr 1fr;
-        align-items: center;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
         min-height: 100vh;
     }
     .about .content {
@@ -40,13 +45,16 @@
             background: var(--green);
         }
         .about .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
-            flex-wrap: wrap-reverse;
+            -ms-flex-wrap: wrap-reverse;
+                flex-wrap: wrap-reverse;
         }
         .about .spacer {
             background: url("{{ section.settings.about_background_image | img_url: '720x720', scale: 2 }}");
             background-size: cover;
-            background-position: center center;
+            background-position: center left;
             width: 100vw;
             height: 80vh;
             display: block;

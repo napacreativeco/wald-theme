@@ -31,7 +31,7 @@ form.js-ajax-cart-form-in-progress [type="submit"] {
   
 /* Show a loading indicator */
 form.js-ajax-cart-form-in-progress [type="submit"]:after { 
-    content: 'Adding to cart…'
+    content: 'Adding to cart…';
     display: block; 
 }
 
@@ -80,18 +80,18 @@ form.js-ajax-cart-form-in-progress [type="submit"]:after {
 }
 
 p, a, span, li, .js-ajax-cart-message {
-    font-family: "ABC Monument Grotesk";
+    font-family: var(--sans-serif-font);
     font-weight: 300;
 }
 
 h1, h2, h3, h4, h5 {
-    font-family: "Saol Display";
+    font-family: var(--serif-font);
     font-style: normal;
     font-weight: 100;
 }
 
 em {
-    font-family: "Saol Display";
+    font-family: var(--serif-font);
     font-style: italic;
 }
 ul {
@@ -103,10 +103,20 @@ a {
     text-decoration: none;
     cursor: pointer;
     color: initial;
+    transition: all 0.5s;
+}
+/* Hover Underlines */
+nav a:hover,
+li a:hover {
+    border-bottom: 1px solid var(--black);
+}
+li.cart-link span:hover {
+    text-decoration: underline;
 }
 
 /* Account Bar */
 .account-bar {
+    display: none;
     background: var(--white);
     width: 100%;
     text-align: center;
