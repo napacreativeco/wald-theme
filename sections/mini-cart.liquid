@@ -134,6 +134,12 @@
     }
     .mini-cart img {
         display: block;
+        object-fit: cover;
+        width: 140px;
+        max-height: 140px;
+    }
+    .mini-cart .remove a {
+        font-size: 0.8rem;
     }
     .mini-cart .info p {
         margin: 0;
@@ -247,7 +253,7 @@
                       
                         <div class="image">
                             <a href="{{ collection_url }}{{ item.url }}" title="{{ item.title }}">
-                                <img src="{{ item | img_url: 'compact' }}"  alt="{{ item.title | escape }}" />
+                                <img src="{{ item | img_url: 'medium' }}"  alt="{{ item.title | escape }}" />
                             </a>
                         </div>
                 

@@ -171,7 +171,7 @@
   </script>
 
 <script>
-  // Home - Line Items - Scroll *WORKS*
+  // Product Gallery - Scroll *WORKS*
     var wit = jQuery('ul.image-list').scrollLeft();
     var theWidth = jQuery('.image-list img').width();
 
@@ -193,6 +193,7 @@
   </script>
 
 
+{% comment %}
   <script type="module">
     import { subscribeToCartSectionsUpdate } from '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}'
 
@@ -200,7 +201,8 @@
       console.log('Sections are updated: ', sections);
     });
   </script>
-  
+{% endcomment %}
+
 </body>
 
 </html>

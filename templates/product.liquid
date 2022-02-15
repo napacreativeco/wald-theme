@@ -307,7 +307,9 @@ To Finish:
     <meta itemprop="image" content="{{ product | img_url: '720x720', scale: 2 }}" />
     
     {% comment %}
-      PRODUCT FORM
+    *
+    * PRODUCT FORM
+    * 
     {% endcomment %}
     <form action="/cart/add" method="post" class="single-product" enctype="multipart/form-data" id="add-to-cart">
       <div class="row">
@@ -335,7 +337,7 @@ To Finish:
             {% if product.images.size == 0 %}
   
                 <li class="placeholder">
-                  <img src="{{ '' | img_url: '720x720', scale: 2 }}" alt="{{ product.title }}" />
+                  <img src="{{ '' | img_url: 'master' }}" alt="{{ product.title }}" />
                 </li>
   
             {% else %}
@@ -345,19 +347,19 @@ To Finish:
                 {% if product.images.size > 1 %}
     
                     <li class="featured-image">
-                      <img src="{{ featured_image | img_url: '720x720', scale: 2 }}" alt="{{ product.title | escape }}" />
+                      <img src="{{ featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}" />
                     </li>
       
                     {% for image in product.images %}
                         <li class="gallery-image">
-                          <img src="{{ image | img_url: '720x720', scale: 2 }}" alt="{{ image.alt | escape }}" />
+                          <img src="{{ image | img_url: 'master' }}" alt="{{ image.alt | escape }}" />
                         </li>
                     {% endfor %}
     
                 {% else %}
     
                     <li>
-                      <img src="{{ featured_image | img_url: 'grande' }}" alt="{{ product.title | escape }}" />
+                      <img src="{{ featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}" />
                     </li>
                   
                 {% endif %}
@@ -436,7 +438,7 @@ To Finish:
                             {{ variant.title }}
                           </label>
                       {% else %}
-                          <input type="radio" class="out-of-stock" id="{{ variant.id }}" value="{{ variant.id }}" name="id" disabled="disabled" />
+                          <input type="radio" class="out-of-stock" id="{{ variant.id }}" value="{{ variant.id }}" name="id" />
                           <label for="{{ variant.id }}" class="out-of-stock">
                             {{ variant.title }}
                           </label>
@@ -461,7 +463,11 @@ To Finish:
             </div>
 
             <div class="final-details">
-              <p>Made to order</p>
+              {% if currentVar.inventory_quantity == 0 %}
+                <p>Made to order</p>
+              {% else %}
+                <p>Available now!</p>
+              {% endif %}
               <a class="size-chart" href="#" title="Size chart">Download Size Chart</a>
             </div>
   
@@ -513,3 +519,15 @@ To Finish:
   Shopify.Image.preload({{ product.images | json }}, '1024x1024');
 </script>
 
+
+
+<script>
+  jQuery('.switch-field').on('change', function() {
+
+    var currentINV = jQuery('input[type=radio]:checked');
+
+    console.log( 'changed to: ' + currentINV ); 
+  
+    
+  });
+</script>
