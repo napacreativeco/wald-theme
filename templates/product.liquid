@@ -463,11 +463,7 @@ To Finish:
             </div>
 
             <div class="final-details">
-              {% if currentVar.inventory_quantity == 0 %}
-                <p>Made to order</p>
-              {% else %}
-                <p>Available now!</p>
-              {% endif %}
+              <p class="am-i-in-stock">&nbsp;</p>
               <a class="size-chart" href="#" title="Size chart">Download Size Chart</a>
             </div>
   
@@ -524,9 +520,32 @@ To Finish:
 <script>
   jQuery('.switch-field').on('change', function() {
 
-    var currentINV = jQuery('input[type=radio]:checked');
+    var theProduct = {{ product | json }};
+    var selectedVariant = jQuery('input[type=radio]:checked').val();
 
-    console.log( 'changed to: ' + currentINV ); 
+    for (var i = 0; i < theProduct.variants.length; i++) {
+        if (theProduct.variants[i].id == selectedVariant) {
+            // return(categoryArray[i].product);
+
+           
+            
+            var final =  theProduct.variants[i].available;
+            if ( final == true) {
+              jQuery('.am-i-in-stock').text('Available now');
+            } else {
+              jQuery('.am-i-in-stock').text('Made to order');
+            }
+            
+            console.log(theProduct.variants[i].available);
+        }
+    }
+    
+    console.log(theProduct.variants.selectedVariant);
+
+    console.log(theProduct);
+    console.log( 'Selected Variant ID: ' + selectedVariant);
+    console.log('All variants: ' + theProduct.variants);
+    console.log('A specific variant by ID: ' + theProduct.variants[0].id)
   
     
   });
