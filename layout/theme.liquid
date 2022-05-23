@@ -128,10 +128,31 @@
     import '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}';
   </script>
 
+{% if template contains 'product' %}
+  <script type="text/javascript" src="{{ 'jquery.zoom.min.js' | asset_url }}" defer=”defer”></script>
+{% endif %}
+
+<script>
+  $(document).ready(function(){
+    $('.image-zoom')
+    .wrap('<span style="display:inline-block"></span>')
+    .css('display', 'block')
+    .parent()
+    .zoom({
+      url: $(this).find('img').attr('data-zoom')
+    });
+  });
+</script>
+
+  <script>
+    jQuery('nav a::first-of-type').addClass('shop-link');
+  </script>
+
   <script>
 
     // ViewHeight fix for mobile
     jQuery(document).ready(function() {
+      jQuery('nav a::first-of-type').addClass('shop-link');
       document.querySelector(':root').style.setProperty('--vh', window.innerHeight/100 + 'px');
     });
 

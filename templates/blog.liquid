@@ -34,8 +34,16 @@
   .blog-page ul.posts-desktop .image {
     min-height: 500px;
   }
+  .blog-page ul.posts-desktop a.blog-image-link:hover,
+  .blog-page a.readmore:hover  {
+    border: 0 !important;
+    text-decoration: none !important;
+  }
   .blog-page ul.posts-mobile {
       display: none;
+  }
+  .blog-page a.readmore span:hover {
+      border-bottom: var(--border-blk);
   }
 
   /* ======================= MEDIA QUERIES */
@@ -112,7 +120,7 @@
         
             <p>{{ article.content | strip_html | truncatewords: 80 }}</p>
         
-            <a href="{{ article.url }}">....Read more</a>
+            <a class="readmore" href="{{ article.url }}"><span>....Read more</span></a>
           
             {% if article.tags.size > 0 %}
               {% for tag in article.tags %} 
@@ -125,7 +133,7 @@
 
           </div>
 
-          <a href="{{ article.url }}" title="{{ article.title }}">
+          <a class="blog-image-link" href="{{ article.url }}" title="{{ article.title }}">
             {% if article.image %}
               <div class="image" style="background: url('{{ article | img_url: 'master' }}'); background-size: cover; background-position: center;">
             {% else %}

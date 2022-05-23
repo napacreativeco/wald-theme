@@ -18,16 +18,27 @@
   }
   nav.desktop {
     padding: 10px 40px;
-    mask: linear-gradient(#000, #000, transparent);
-      -webkit-mask: linear-gradient(#000, #000, transparent);
-    backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    /* mask: linear-gradient(#000, #000, transparent); */
+
+
     background: transparent;
     position: fixed;
     top: 0;
     right: 0;
     left: 0;
     z-index: 99;
+  }
+  nav.desktop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-mask: linear-gradient(#000, #000, #000, transparent);
+
+    backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
   }
   nav.desktop .row {
       display: -ms-grid;
@@ -38,6 +49,27 @@
           -ms-flex-align: center;
               align-items: center;
       position: relative;
+      mask: none;
+      
+  }
+  /* Dropdown */
+  nav.desktop .has-dropdown ul {
+    display: none;
+    position: absolute;
+    left: 0px;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    z-index: 99999999;
+  }
+  nav.desktop .has-dropdown:hover ul {
+    display: flex;
+  }
+  nav.desktop .has-dropdown li {
+    margin-left: 20px;
+  }
+  nav.desktop .has-dropdown li:first-of-type {
+    margin-left: 0px;
   }
   nav.desktop .center {
     display: -webkit-box;
@@ -51,7 +83,10 @@
     border-bottom: 0px;
   }
   nav.desktop .center img {
-    max-width: 140px;
+    max-width: 164px;
+  }
+  nav.desktop .left .first a {
+    /* display: none; */
   }
   nav.desktop ul {
       display: -webkit-box;
@@ -121,6 +156,21 @@
     position: relative;
   }
   .js-my-cart-open { right: 0 !important; }
+
+  /*
+  * Submenu
+  */
+  .submenu-container {
+    position: absolute;
+    float: left;
+  }
+  .submenu-container ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 400px;
+
+  }
 
   /* =====================================
                 MEDIA QUERIES
@@ -365,6 +415,7 @@
 
         {% endfor %} {% comment %} end: for link in link-list {% endcomment %}
       </ul>
+
     </div>
 
     {% comment %}

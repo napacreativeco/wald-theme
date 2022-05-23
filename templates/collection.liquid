@@ -9,6 +9,15 @@
     padding: 80px 0 40px 0;
     min-height: 100vh;
   }
+  .shop-nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-left: 20px;
+  }
+  .shop-nav li {
+    margin-left: 20px;
+  }
   .collections .account-bar {
     display: none;
   }
@@ -60,6 +69,7 @@
   }
   .collections ul.products li .price {
     text-align: right;
+    font-size: 1.3rem;
   }
   .collections ul.products li .price a:hover {
     border-bottom: 0px;
@@ -67,7 +77,10 @@
   .collections ul.products li .price span {
     font-family: var(--serif-font);
   }
-
+  /* Pagination */
+.pagination {
+  padding: 0 0 0 40px;
+}
 
   /* ======================= MEDIA QUERIES */
   
@@ -97,6 +110,70 @@
 </style>
 
 <div class="collections">
+
+  <div class="shop-nav">
+    <ul>
+      {% for link in linklists.navbar-subcategories.links %}
+
+        {% assign has_sub_menu = false %}
+        {% assign has_sub_categories = false %}
+        {% assign parent_link_active = false %}
+        {% assign child_list_handle = link.title | handle %}
+
+        {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+
+          {% assign has_sub_menu = true %}
+          {% for l in linklists[child_list_handle].links %}
+
+            {% if handle != blank and handle == l.object.handle %}
+              {% assign parent_link_active = true %}
+            {% elsif page_title == l.title %}
+              {% assign parent_link_active = true %}
+            {% endif %}
+
+          {% endfor %}
+
+        {% elsif link.type == 'collection_link' and link.object.all_tags.size > 0 %}
+
+          {% assign has_sub_categories = true %}
+
+        {% endif %}
+
+        <li class="{% if link.active or parent_link_active %} active{% endif %}{% if has_sub_menu or has_sub_categories %} has-dropdown{% endif %}{% if forloop.first %} first{% elsif forloop.last %} last{% endif %}">
+          
+          <a href="{{ link.url }}">
+            {{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}
+          </a>
+
+          {% if has_sub_menu or has_sub_categories %}
+
+            <ul>
+              {% if has_sub_menu %}
+
+                {% for l in linklists[child_list_handle].links %}
+                  <li class="{% if l.active %} active{% endif %}">
+                    <a href="{{ l.url }}">{{ l.title }}</a>
+                  </li>
+                {% endfor %}
+
+              {% elsif has_sub_categories %}
+
+                {% for tag in link.object.all_tags %}
+                  <li class="{% if current_tags contains tag %} active{% endif %}">
+                    <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+                  </li>
+                {% endfor %}
+
+              {% endif %}
+            </ul>
+
+          {% endif %} {% comment %} end: has_sub_menu {% endcomment %}
+        </li>
+
+      {% endfor %} {% comment %} end: for link in link-list {% endcomment %}
+    </ul>
+
+  </div>
 
   {% paginate collection.products by 10 %}
 
@@ -146,9 +223,12 @@
       </ul>
     </div>
 
-    {% if paginate.pages > 1 %}
-      {{ paginate | default_pagination }}
-    {% endif %}
+    <div class="pagination">
+      {% if paginate.pages > 1 %}
+        {{ paginate | default_pagination }}
+      {% endif %}
+    </div>
+
 
   {% endpaginate %}
 
