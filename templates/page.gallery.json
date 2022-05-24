@@ -3,8 +3,7 @@
     "main": {
       "type": "image-gallery",
       "settings": {
-        "story_title": "Title",
-        "logo_image": "shopify:\/\/shop_images\/IMG_6828.jpg"
+        "gallery_urls": "[\"https:\/\/images.unsplash.com\/photo-1653396882302-75885308cf7a?crop=entropy&amp;cs=tinysrgb&amp;fm=jpg&amp;ixlib=rb-1.2.1&amp;q=60&amp;raw_url=true&amp;ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=500\",\n\"https:\/\/images.unsplash.com\/photo-1653396882302-75885308cf7a?crop=entropy&amp;cs=tinysrgb&amp;fm=jpg&amp;ixlib=rb-1.2.1&amp;q=60&amp;raw_url=true&amp;ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=500\"]"
       }
     }
   },
