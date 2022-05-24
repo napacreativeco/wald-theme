@@ -12,25 +12,19 @@
 
     <div class="row">
         <h2> {{ section.settings.story_title }} </h2>
-        <div>{{ section.settings.story_body }}</div>
+        <div><img src="{{ section.settings.logo_image }}" /></div>
     </div>
 
 </section>
 
 {% schema %}
   {
-    "name": "Your story",
+    "name": "Gallery",
     "settings": [
       {
-        "id": "story_title",
-        "type": "text",
-        "label": "Heading",
-        "default": "Title"
-      },
-      {
-        "type": "image_picker",
-        "id": "logo_image",
-        "label": "Logo image"
+        "type": "html",
+        "id": "gallery_urls",
+        "label": "Gallery URLs"
       }      
     ]
   }
