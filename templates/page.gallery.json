@@ -1,10 +1,14 @@
 {
-    "sections": {
-      "main": {
-        "type": "image-gallery"
+  "sections": {
+    "main": {
+      "type": "image-gallery",
+      "settings": {
+        "story_title": "Title",
+        "logo_image": "shopify:\/\/shop_images\/IMG_6828.jpg"
       }
-    },
-    "order": [
-      "main"
-    ]
+    }
+  },
+  "order": [
+    "main"
+  ]
 }
