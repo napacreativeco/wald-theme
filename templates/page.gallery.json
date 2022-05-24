@@ -3,7 +3,7 @@
     "main": {
       "type": "image-gallery",
       "settings": {
-        "gallery_urls": "\"one\",\n\"two\""
+        "gallery_urls": "[\n\"one\",\n\"two\"\n]"
       }
     }
   },
