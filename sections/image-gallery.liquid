@@ -11,8 +11,7 @@
 <section class="about">
 
     <div class="row">
-        <h2> {{ section.settings.story_title }} </h2>
-        <div></div>
+        <div>{{ section.settings.gallery_urls }}</div>
     </div>
 
 </section>
@@ -24,7 +23,8 @@
       {
         "type": "html",
         "id": "gallery_urls",
-        "label": "Gallery URLs"
+        "label": "Gallery URLs",
+        "default": "['https://via.placeholder.com/350x150']",
       }      
     ]
   }
