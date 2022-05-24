@@ -8,10 +8,12 @@
 
 {% endstylesheet %}
 
-<section class="about">
+{% assign gallery_array = section.settings.gallery_urls %}
+
+<section class="gallery">
 
     <div class="row">
-        <div>{{ section.settings.gallery_urls }}</div>
+        
     </div>
 
 </section>
@@ -24,7 +26,6 @@
         "type": "html",
         "id": "gallery_urls",
         "label": "Gallery URLs",
-        "default": "['https://via.placeholder.com/350x150']",
       }      
     ]
   }
