@@ -8,12 +8,19 @@
 
 {% endstylesheet %}
 
-{% assign gallery_array = section.settings.gallery_urls %}
-
 <section class="gallery">
 
     <div class="row">
-        
+ 
+
+        {% for block in section.blocks %}
+          {% if block.type == 'advert' %}
+            <!-- output an image with a link -->
+          {% elsif block.type == 'headline' %}
+            <!-- output a header with text -->
+          {% endif %}
+        {% endfor %}
+      
     </div>
 
 </section>
@@ -21,12 +28,20 @@
 {% schema %}
   {
     "name": "Gallery",
-    "settings": [
-      {
-        "type": "html",
-        "id": "gallery_urls",
-        "label": "Gallery URLs",
-      }      
+    "tag": "section",
+    "class": "gallery",
+    "blocks": [
+     {
+       "name": "Gallery Image",
+       "type": "galleryimage",
+       "settings": [
+          {
+            "type": "image_picker",
+            "id": "gallery_image",
+            "label": "Gallery Image"
+          },
+        ]
+      }
     ]
   }
 {% endschema %}
