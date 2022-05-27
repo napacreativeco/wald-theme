@@ -128,6 +128,10 @@
     import '{{ "liquid-ajax-cart-v1.9.0.js" | asset_url }}';
   </script>
 
+  <script type="module">
+    import '{{ "masonry.min.js" | asset_url }}';
+  </script>
+
 {% if template contains 'product' %}
   <script type="text/javascript" src="{{ 'jquery.zoom.min.js' | asset_url }}" defer=”defer”></script>
 {% endif %}
@@ -141,6 +145,16 @@
     .zoom({
       url: $(this).find('img').attr('data-zoom')
     });
+  });
+</script>
+
+<script>
+  var $grid = $('.grid').imagesLoaded( function() {
+    $grid.masonry({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      columnWidth: '.grid-sizer'
+    }); 
   });
 </script>
 

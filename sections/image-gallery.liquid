@@ -4,22 +4,33 @@
 
 {% endcomment %}
 
-{% stylesheet %}
+<style>
+  .grid-item { width: 200px; }
+  .grid-item--width2 { width: 400px; }
 
-{% endstylesheet %}
+  /* clear fix */
+  .grid:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+</style>
 
 <section class="gallery">
 
     <div class="row">
  
-
+      <div class="grid">
+        <div class="grid-sizer"></div>
         {% for block in section.blocks %}
-          {% if block.type == 'advert' %}
-            <!-- output an image with a link -->
-          {% elsif block.type == 'headline' %}
-            <!-- output a header with text -->
-          {% endif %}
+          {% case block.type %}
+            {% when 'galleryimage' %}
+              <div class="grid-item">
+                <img src="{{ block.settings.gallery_image | image_url: width: 2048 }}" />
+              </div>
+          {% endcase %}
         {% endfor %}
+      </div>
       
     </div>
 
