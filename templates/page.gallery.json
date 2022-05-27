@@ -2,8 +2,25 @@
   "sections": {
     "main": {
       "type": "image-gallery",
+      "blocks": {
+        "e724dbe8-4d6f-461b-998e-900b148438a1": {
+          "type": "galleryimage",
+          "settings": {
+            "gallery_image": "shopify:\/\/shop_images\/IMG_6828.jpg"
+          }
+        },
+        "f943944e-376e-4249-a815-2af0ba78ec38": {
+          "type": "galleryimage",
+          "settings": {
+            "gallery_image": "shopify:\/\/shop_images\/IMG_6832.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "e724dbe8-4d6f-461b-998e-900b148438a1",
+        "f943944e-376e-4249-a815-2af0ba78ec38"
+      ],
       "settings": {
-        "gallery_urls": "[\n\"one\",\n\"two\"\n]"
       }
     }
   },
