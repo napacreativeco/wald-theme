@@ -5,27 +5,62 @@
 {% endcomment %}
 
 <style>
-  .grid-item { width: 200px; }
-  .grid-item--width2 { width: 400px; }
-
-  /* clear fix */
-  .grid:after {
-    content: '';
-    display: block;
-    clear: both;
+  body#gallery {
+    background: var(--green) !important;
   }
+
+  .masonry { /* Masonry container */
+    -webkit-column-count: 4;
+  -moz-column-count:4;
+  column-count: 4;
+  /* -webkit-column-gap: 1em;
+  -moz-column-gap: 1em;
+  column-gap: 1em; */
+   margin: 1.5em;
+    padding: 0;
+    -moz-column-gap: 1.5em;
+    -webkit-column-gap: 1.5em;
+    column-gap: 1.5em;
+    font-size: .85em;
+}
+.m-item {
+    display: inline-block;
+    margin: 0 0 1.5em;
+    width: 100%;
+	-webkit-transition:1s ease all;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.m-item img{max-width:100%;}
+
+@media only screen and (max-width: 320px) {
+    .masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .masonry {
+        -moz-column-count: 1;
+        -webkit-column-count: 1;
+        column-count: 1;
+    }
+}
+
+
 </style>
 
 <section class="gallery">
-
     <div class="row">
  
-      <div class="grid">
-        <div class="grid-sizer"></div>
+      <div class="masonry">
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'galleryimage' %}
-              <div class="grid-item">
+              <div class="m-item">
                 <img src="{{ block.settings.gallery_image | image_url: width: 2048 }}" />
               </div>
           {% endcase %}
