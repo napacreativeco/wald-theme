@@ -354,7 +354,7 @@ To Finish:
                 {% if product.images.size > 1 %}
       
                     {% for image in product.images %}
-                        <li class="gallery-image">
+                        <li class="gallery-image" itemprop="image">
                           <img class="image-zoom" src="{{ image | img_url: 'master' }}" alt="{{ image.alt | escape }}" />
                           <div class="image-details"></div>
                         </li>
@@ -362,7 +362,7 @@ To Finish:
     
                 {% else %}
     
-                    <li class="featured-image">
+                    <li class="featured-image" itemprop="image">
                       <img class="image-zoom" src="{{ featured_image | img_url: 'master' }}" alt="{{ product.title | escape }}" />
                     </li>
                     <div class="image-details"></div>
@@ -376,7 +376,7 @@ To Finish:
         {% comment %} INFO {% endcomment %}
         <div class="info">
   
-          <div class="title">
+          <div class="title" itemprop="name">
             <h1>{{ product.title }}</h1>
           </div>
   
