@@ -150,29 +150,6 @@
             {{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}
           </a>
 
-          {% if has_sub_menu or has_sub_categories %}
-
-            <ul>
-              {% if has_sub_menu %}
-
-                {% for l in linklists[child_list_handle].links %}
-                  <li class="{% if l.active %} active{% endif %}">
-                    <a href="{{ l.url }}">{{ l.title }}</a>
-                  </li>
-                {% endfor %}
-
-              {% elsif has_sub_categories %}
-
-                {% for tag in link.object.all_tags %}
-                  <li class="{% if current_tags contains tag %} active{% endif %}">
-                    <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
-                  </li>
-                {% endfor %}
-
-              {% endif %}
-            </ul>
-
-          {% endif %} {% comment %} end: has_sub_menu {% endcomment %}
         </li>
 
       {% endfor %} {% comment %} end: for link in link-list {% endcomment %}
@@ -180,7 +157,7 @@
 
   </div>
 
-  {% paginate collection.products by 10 %}
+  {% paginate collection.products by 16 %}
 
   <div class="header">
 
