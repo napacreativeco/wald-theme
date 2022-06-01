@@ -173,10 +173,11 @@
     /* Sign up: Success */
     .sign_up_success {
         position: fixed;
-        top: 50%;
+        top: 0;
         left: 0;
         right: 0;
         width: 100vw;
+        height: 60px;
         display: none;
         justify-content: center;
         align-items: center;
@@ -185,13 +186,9 @@
         color: var(--black);
         padding: 10px;
         text-transform: uppercase;
-        /* animation: fadeOut 10s forwards; */
+        animation: fadeOut 4s;
+        animation-fill-mode: forwards;
     }   
-    @keyframes fadeOut {
-        0% { opacity: 1; display: flex; }
-        75% { opacity: 0; }
-        100% { display: none; }
-    }
 
     /* ======================= MEDIA QUERIES */
     
@@ -366,12 +363,16 @@
                     <div class="sign_up_success">
                         <p>Signed up successfully.</p>
                     </div>
+
+                    <script>
+                        setTimeout(function() {
+                            jQuery('.sign_up_success').fadeOut();
+                        }, 4000);
+                    </script>
                 {% else %}
                     {{ form.errors | default_errors }}
                 {% endif %}
             {% endform %}
-
-          
 
         </div>
 
@@ -480,3 +481,4 @@
     </div>
     <p class="copyright">&copy; 2022 WALD. All Rights Reserved.</p>
 </footer>
+
