@@ -364,10 +364,11 @@
 
                     <script>
                         setTimeout(function() {
-                            jQuery('.sign_up_success').fadeOut('slow', function() {
-                                jQuery('.sign_up_success').css('display', 'none');
-                            });
+                            jQuery('.sign_up_success').fadeOut();
                         }, 4000);
+                        setTimeout(function() {
+                            jQuery('.sign_up_success').css('display', 'none !important');
+                        }, 4100);
                     </script>
                 {% else %}
                     {{ form.errors | default_errors }}
