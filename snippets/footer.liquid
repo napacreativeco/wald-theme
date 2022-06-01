@@ -170,6 +170,19 @@
         width: 20px;
     }
 
+    /* Sign up: Success */
+    .sign_up_success {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% -50%);
+        width: 400px;
+        height: 400px;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }   
+
     /* ======================= MEDIA QUERIES */
     
     /* Large devices */
@@ -337,7 +350,12 @@
                 <input class="submit" type="submit" value="Sign Up" />
 
                 {% if form.posted_successfully? %}
-                    Signed up successfully.
+                    <style>
+                        .sign_up_success { display: flex; }
+                    </style>
+                    <div class="sign_up_success">
+                        Signed up successfully.
+                    </div>
                 {% else %}
                     {{ form.errors | default_errors }}
                 {% endif %}
