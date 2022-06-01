@@ -181,6 +181,8 @@
         display: none;
         justify-content: center;
         align-items: center;
+        z-index: 99999999;
+        background: var(--white);
     }   
 
     /* ======================= MEDIA QUERIES */
@@ -354,7 +356,7 @@
                         .sign_up_success { display: flex; }
                     </style>
                     <div class="sign_up_success">
-                        Signed up successfully.
+                        <p>Signed up successfully.</p>
                     </div>
                 {% else %}
                     {{ form.errors | default_errors }}
