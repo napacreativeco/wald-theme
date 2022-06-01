@@ -364,7 +364,9 @@
 
                     <script>
                         setTimeout(function() {
-                            jQuery('.sign_up_success').fadeOut();
+                            jQuery('.sign_up_success').fadeOut('slow', function() {
+                                jQuery('.sign_up_success').css('display', 'none');
+                            });
                         }, 4000);
                     </script>
                 {% else %}
