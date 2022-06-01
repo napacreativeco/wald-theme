@@ -46,6 +46,13 @@
 
   <script src="https://unpkg.com/scrollreveal"></script>
 
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script>
+    function onSubmit(token) {
+      document.getElementById("contact_form").submit();
+    }
+  </script>
+
 </head>
 
 <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >

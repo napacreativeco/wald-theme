@@ -58,7 +58,8 @@
         font-size: 2.4rem;
         margin: 0 0 14px 0;
     }
-    footer .row .center .email input[type="text"] {
+    footer .row .center .email input[type="text"],
+    footer .row .center .email input[type="email"] {
         background: transparent; 
         border-top: 0;
         border-right: 0;
@@ -71,27 +72,33 @@
         width: 80%;
         max-width: 300px;
     }
-    footer .row .center .email input[type="text"]::-webkit-input-placeholder {
+    footer .row .center .email input[type="text"]::-webkit-input-placeholder,
+    footer .row .center .email input[type="email"]::-webkit-input-placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email input[type="text"]::-moz-placeholder {
+    footer .row .center .email input[type="text"]::-moz-placeholder,
+    footer .row .center .email input[type="email"]::-moz-placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email input[type="text"]:-ms-input-placeholder {
+    footer .row .center .email input[type="text"]:-ms-input-placeholder,
+    footer .row .center .email input[type="email"]:-ms-input-placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email input[type="text"]::-ms-input-placeholder {
+    footer .row .center .email input[type="text"]::-ms-input-placeholder,
+    footer .row .center .email input[type="email"]::-ms-input-placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email input[type="text"]::placeholder {
+    footer .row .center .email input[type="text"]::placeholder,
+    footer .row .center .email input[type="email"]::placeholder {
         color: var(--black);
         text-transform: uppercase;
     }
-    footer .row .center .email input[type="submit"] {
+    footer .row .center .email input[type="submit"],
+    footer .row .center .email button[type="submit"] {
         background: transparent;
         border: 1px solid var(--black);
         padding: 6px;
@@ -101,7 +108,8 @@
         cursor: pointer;
         transition: all 0.5s;
     }
-    footer .row .center .email input[type="submit"]:hover {
+    footer .row .center .email input[type="submit"]:hover,
+    footer .row .center .email button[type="submit"]:hover {
         opacity: 0.6;
     }
     footer .row .center a {
@@ -206,7 +214,8 @@
                 -webkit-box-align: start;
                 -ms-flex-align: start;
         }
-        footer .row .center .email input[type="text"] {
+        footer .row .center .email input[type="text"],
+        footer .row .center .email input[type="email"] {
             width: 100%;
             text-align: left;
         }
@@ -320,16 +329,26 @@
         <span class="title-desktop large">Newsletter</span>
         <a href="#" class="instagram-mobile" title="Instagram">Find us on Instagram</a>
         <div class="email">
+
             {% form 'customer' %}
-                <input id="contact_tags" name="contact[tags]" type="hidden" value="prospect,newsletter" />
-
-                <input id="contact_email" name="contact[email]" type="text" placeholder="Email" />
-                <input class="submit" type="submit" value="Sign Up" />
-
+                {{ form.errors | default_errors }}
                 {% if form.posted_successfully? %}
-                    Comment posted successfully!
+                    <p class="form--success">Signed up successfully</p>
                 {% else %}
-                    {{ form.errors | default_errors }}
+                    <input type="hidden" name="contact[tags]" value="newsletter">
+                    <input type="email"
+                        name="contact[email]"
+                        id="Email"
+                        class="input-group__field newsletter__input"
+                        value="{% if customer %}{{ customer.email }}{% endif %}"
+                        placeholder="Email"
+                        autocorrect="off"
+                        autocapitalize="off">
+                    <span class="input-group__btn">
+                        <button type="submit" class="btn newsletter__submit g-recaptcha" name="commit" id="Subscribe" data-sitekey="6Lc7BTggAAAAAFW3V2VZnmDcgaReA5Dtugnw71Po" data-callback='onSubmit'>
+                            <span class="newsletter__submit-text--large">Sign up</span>
+                        </button>
+                    </span>
                 {% endif %}
             {% endform %}
 
