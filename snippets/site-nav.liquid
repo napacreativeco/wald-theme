@@ -390,29 +390,33 @@
               {{ link.title }}{% if has_sub_menu or has_sub_categories %} <i class="fa fa-angle-down"></i>{% endif %}
             </a>
 
-            {% if has_sub_menu or has_sub_categories %}
+            {% if template contains 'collection' %}
 
-              <ul>
-                {% if has_sub_menu %}
+            {% else %}
+              {% if has_sub_menu or has_sub_categories %}
 
-                  {% for l in linklists[child_list_handle].links %}
-                    <li class="{% if l.active %} active{% endif %}">
-                      <a href="{{ l.url }}">{{ l.title }}</a>
-                    </li>
-                  {% endfor %}
+                <ul>
+                  {% if has_sub_menu %}
 
-                {% elsif has_sub_categories %}
+                    {% for l in linklists[child_list_handle].links %}
+                      <li class="{% if l.active %} active{% endif %}">
+                        <a href="{{ l.url }}">{{ l.title }}</a>
+                      </li>
+                    {% endfor %}
 
-                  {% for tag in link.object.all_tags %}
-                    <li class="{% if current_tags contains tag %} active{% endif %}">
-                      <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
-                    </li>
-                  {% endfor %}
+                  {% elsif has_sub_categories %}
 
-                {% endif %}
-              </ul>
+                    {% for tag in link.object.all_tags %}
+                      <li class="{% if current_tags contains tag %} active{% endif %}">
+                        <a href="{{ link.url }}/{{ tag | handle }}">{{ tag }}</a>
+                      </li>
+                    {% endfor %}
 
-            {% endif %} {% comment %} end: has_sub_menu {% endcomment %}
+                  {% endif %}
+                </ul>
+
+              {% endif %} {% comment %} end: has_sub_menu {% endcomment %}
+            {% endif %} {% comment %} end: if collection page {% endcomment %}
           </li>
 
         {% endfor %} {% comment %} end: for link in link-list {% endcomment %}
