@@ -157,8 +157,6 @@
 
   </div>
 
-  {% paginate collection.products by 16 %}
-
   <div class="header">
 
       {% if collection.handle != 'all' %}
@@ -177,7 +175,7 @@
 
     <div class="row">
       <ul class="products">
-        {% for product in collection.products %}
+        {% for product in collection.all.products %}
           <li>
             <a class="product-img-link" href="{{ product.url }}" title="{{ product.title }}">
               <img src="{{ product.featured_image | img_url: "large" }}" alt={{ product.title }}>
@@ -205,14 +203,6 @@
       </ul>
     </div>
 
-    <div class="pagination">
-      {% if paginate.pages > 1 %}
-        {{ paginate | default_pagination }}
-      {% endif %}
-    </div>
-
-
-  {% endpaginate %}
 
 </div>{% comment %} end: Collections {% endcomment %}
 
