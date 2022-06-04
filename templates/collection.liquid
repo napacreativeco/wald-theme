@@ -175,7 +175,7 @@
 
     <div class="row">
       <ul class="products">
-        {% for product in collections.products %}
+        {% for product in collection.products %}
           <li>
             <a class="product-img-link" href="{{ product.url }}" title="{{ product.title }}">
               <img src="{{ product.featured_image | img_url: "large" }}" alt={{ product.title }}>
